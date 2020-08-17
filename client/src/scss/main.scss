@@ -1,0 +1,120 @@
+$primary: #233142;
+$second-color: #455d7a;
+$secondary: #f95959;
+$fourth-color: #e3e3e3;
+$primary-text-color: #212121;
+$secondary-text-color: #757575;
+$divider-color: #bdbdbd;
+$icon-color: #000000;
+
+body {
+  padding: 0;
+  margin: 0;
+  background: $primary;
+  font-family: "Montserrat", sans-serif;
+}
+
+*,
+*:focus,
+*:hover {
+  outline: none;
+}
+
+.sac {
+  font-family: "Sacramento", cursive;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.container {
+  max-width: 80%;
+  margin: auto;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.space {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth {
+  width: 100%;
+  height: 100vh;
+  color: $divider-color;
+  .top {
+    padding: 20px 30px;
+    font-size: 2rem;
+    color: $fourth-color;
+
+    a {
+      color: $divider-color;
+      font-size: 1rem;
+      text-decoration: none;
+      display: inline-block;
+      padding: 10px;
+      background: darken($primary, 5.5);
+      border-radius: 3px;
+
+      &:hover {
+        color: $secondary;
+      }
+    }
+  }
+
+  .sub {
+    max-width: 400px;
+    margin: auto;
+    margin-top: 1rem;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  form {
+    input {
+      width: 100%;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      padding: 15px;
+      border: 0;
+      background: darken($primary, 5.5);
+      color: $fourth-color;
+      margin-top: 5px;
+      margin-bottom: 15px;
+    }
+  }
+
+  .active {
+    border-bottom: 2px solid $secondary;
+  }
+
+  input[type="submit"] {
+    background: $secondary;
+    color: $fourth-color;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0;
+    padding: 12px;
+
+    &:hover {
+      background: darken($secondary, 4);
+    }
+  }
+}

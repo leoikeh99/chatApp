@@ -3,10 +3,10 @@ const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
-const connectDB = require("./config/db");
+const db = require("./config/db");
 
 //connect to mongoDB
-connectDB();
+db.connectDB();
 
 //middleware
 app.use(express.json({ extended: false }));
