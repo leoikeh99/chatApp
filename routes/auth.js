@@ -57,14 +57,29 @@ router.post(
 
 //get a user
 router.get("/", auth, async (req, res) => {
+  const value = req.query.value;
   const { id } = req.user;
 
-  try {
-    const user = await User.findById(id).select("-password");
-    res.json(user);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ msg: "server error" });
+  if (!value) {
+    try {
+      const user = await User.findById(id).select("-password");
+      res.json(user);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "server error" });
+    }
+  } else {
+    try {
+      const users = await User.find({});
+      const search = users.filter((user) => {
+        const regex = new RegExp(`${value}`, "gi");
+        return user.username.match(regex) || user.email.match(regex);
+      });
+      res.json(search);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ msg: "server error" });
+    }
   }
 });
 

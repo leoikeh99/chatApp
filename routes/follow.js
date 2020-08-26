@@ -8,22 +8,29 @@ const User = require("../models/User");
 //follow a user
 router.post("/", auth, async (req, res) => {
   const follower = req.user.id;
-  const following = req.body.username;
+  const following = req.body.id;
 
   try {
-    const user = await User.findOne({ username: following });
+    const user = await User.findById(following);
     if (!user) {
       return res.status(400).json({ msg: "user invalid" });
     }
 
-    const checkFollow = await Follow.findOne({ follower, following: user.id });
+    const checkFollow = await Follow.findOne({
+      follower,
+      "following.id": user.id,
+    });
     if (checkFollow) {
       return res.status(400).json({ msg: "You already follow this user" });
     }
 
     const follow = new Follow({
       follower,
-      following: user.id,
+      following: {
+        username: user.username,
+        id: user.id,
+        bio: user.bio,
+      },
     });
 
     await follow.save();
@@ -41,7 +48,7 @@ router.get("/:id", auth, async (req, res) => {
 
   try {
     if (type === "followers") {
-      const followers = await Follow.find({ following: user });
+      const followers = await Follow.find({ "following.id": user });
       return res.json(followers);
     } else if (type === "following") {
       const following = await Follow.find({ follower: user });

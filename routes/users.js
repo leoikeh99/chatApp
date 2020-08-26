@@ -6,6 +6,7 @@ const config = require("config");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
+const auth = require("../middleware/auth");
 
 router.post(
   "/",
@@ -21,16 +22,15 @@ router.post(
     }
 
     const { username, email, password } = req.body;
-
     try {
       const checkUsername = await User.findOne({ username });
       const checkemail = await User.findOne({ email });
 
       if (checkUsername) {
-        return res.status(400).json({ error: "username already exists" });
+        return res.status(400).json({ msg: "username already exists" });
       }
       if (checkemail) {
-        return res.status(400).json({ error: "email already exists" });
+        return res.status(400).json({ msg: "email already exists" });
       }
 
       var user = new User({
@@ -61,7 +61,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).json({ err });
+      res.status(500).json({ msg: "server error" });
     }
   }
 );

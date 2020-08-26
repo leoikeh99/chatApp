@@ -7,6 +7,15 @@ $secondary-text-color: #757575;
 $divider-color: #bdbdbd;
 $icon-color: #000000;
 
+@keyframes rotate {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -35,6 +44,11 @@ h6 {
 
 .container {
   max-width: 80%;
+  margin: auto;
+}
+
+.container2 {
+  max-width: 900px;
   margin: auto;
 }
 
@@ -115,6 +129,132 @@ h6 {
 
     &:hover {
       background: darken($secondary, 4);
+    }
+  }
+}
+
+.home {
+  color: $divider-color;
+  .top {
+    padding: 20px 30px;
+    font-size: 1.2rem;
+    color: $fourth-color;
+  }
+
+  #body {
+    display: grid;
+    grid-template-columns: 13% 87%;
+    padding: 0px 13px;
+
+    .sideNav {
+      display: flex;
+      justify-content: center;
+      .color-secondary {
+        color: $secondary;
+      }
+      ul {
+        padding: 0;
+        margin: 0;
+
+        li {
+          list-style: none;
+          width: 70px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 9px;
+          border-radius: 35px;
+          text-align: center;
+          background: darken($primary, 5.5);
+          cursor: pointer;
+          &:hover {
+            animation: rotate 0.5s forwards;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile {
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  img {
+    width: 100%;
+  }
+  h2 {
+    margin-left: 13px;
+    color: $divider-color;
+  }
+  .flex {
+    display: flex;
+  }
+  .top {
+    background: darken($primary, 5.5);
+    border-radius: 10px;
+    padding: 15px;
+  }
+  .bio {
+    margin-left: 13px;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    background: darken($primary, 8.5);
+    padding: 8px;
+    display: inline-block;
+    border-radius: 8px;
+  }
+  p {
+    margin: 5px 0px;
+    font-size: 0.8rem;
+    margin-left: 13px;
+  }
+
+  ul {
+    padding: 0;
+    margin: 10px 0px;
+    text-align: center;
+    li {
+      list-style: none;
+      display: inline-block;
+      padding: 10px 15px;
+      border-radius: 20px;
+      background: darken($primary, 5.5);
+      margin-left: 5px;
+      cursor: pointer;
+    }
+    .active {
+      color: $secondary;
+    }
+  }
+}
+
+.user {
+}
+
+.search {
+  .cover {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background: darken($primary, 5.5);
+    padding: 12px 20px;
+    border-radius: 28px;
+    box-sizing: border-box;
+
+    form {
+      width: 100%;
+      input {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        padding: 0px 15px;
+        font-size: 1.4rem;
+        color: $divider-color;
+      }
     }
   }
 }

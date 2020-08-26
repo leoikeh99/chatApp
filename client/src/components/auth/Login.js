@@ -1,20 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import authContext from "../../context/auth/authContext";
 
-const Login = () => {
+const Login = (props) => {
+  const AuthContext = useContext(authContext);
+  const { error, isAuthenticated, login } = AuthContext;
+
   const [active, setActive] = useState(null);
-  const [username, setUsername] = useState("");
+  const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", () => {
       setActive(null);
     });
-  }, []);
+
+    if (isAuthenticated) {
+      props.history.push("/");
+    }
+  }, [isAuthenticated, props.history]);
 
   const submit = (e) => {
     e.preventDefault();
-    console.log("submitted");
+    login({
+      email,
+      password,
+    });
   };
 
   return (
@@ -22,7 +33,7 @@ const Login = () => {
       <div className="top">
         <div className="space">
           <h1 className="sac">Chatter</h1>
-          <Link to="/">Register</Link>
+          <Link to="/register">Register</Link>
         </div>
       </div>
 
@@ -30,12 +41,13 @@ const Login = () => {
         <div className="sub">
           <h2>Login</h2>
           <form action="" onSubmit={submit}>
-            <label htmlFor="">Username</label>
+            <label htmlFor="">Email</label>
             <input
-              type="text"
+              type="email"
               onClick={() => setActive("username")}
               className={active === "username" ? "active" : ""}
               onChange={(e) => setUsername(e.target.value.trim())}
+              required
             />
 
             <label htmlFor="">Password</label>
@@ -44,6 +56,7 @@ const Login = () => {
               onClick={() => setActive("password")}
               className={active === "password" ? "active" : ""}
               onChange={(e) => setPassword(e.target.value.trim())}
+              required
             />
 
             <input type="submit" value="Sign up" />

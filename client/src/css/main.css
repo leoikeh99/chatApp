@@ -1,3 +1,9 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(180deg); }
+  100% {
+    transform: rotate(360deg); } }
+
 body {
   padding: 0;
   margin: 0;
@@ -22,6 +28,10 @@ h6 {
 
 .container {
   max-width: 80%;
+  margin: auto; }
+
+.container2 {
+  max-width: 900px;
   margin: auto; }
 
 .center {
@@ -82,3 +92,103 @@ h6 {
     padding: 12px; }
     .auth input[type="submit"]:hover {
       background: #f84545; }
+
+.home {
+  color: #bdbdbd; }
+  .home .top {
+    padding: 20px 30px;
+    font-size: 1.2rem;
+    color: #e3e3e3; }
+  .home #body {
+    display: grid;
+    grid-template-columns: 13% 87%;
+    padding: 0px 13px; }
+    .home #body .sideNav {
+      display: flex;
+      justify-content: center; }
+      .home #body .sideNav .color-secondary {
+        color: #f95959; }
+      .home #body .sideNav ul {
+        padding: 0;
+        margin: 0; }
+        .home #body .sideNav ul li {
+          list-style: none;
+          width: 70px;
+          height: 70px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 9px;
+          border-radius: 35px;
+          text-align: center;
+          background: #192330;
+          cursor: pointer; }
+          .home #body .sideNav ul li:hover {
+            animation: rotate 0.5s forwards; }
+
+.profile .avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; }
+
+.profile img {
+  width: 100%; }
+
+.profile h2 {
+  margin-left: 13px;
+  color: #bdbdbd; }
+
+.profile .flex {
+  display: flex; }
+
+.profile .top {
+  background: #192330;
+  border-radius: 10px;
+  padding: 15px; }
+
+.profile .bio {
+  margin-left: 13px;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  background: #141c26;
+  padding: 8px;
+  display: inline-block;
+  border-radius: 8px; }
+
+.profile p {
+  margin: 5px 0px;
+  font-size: 0.8rem;
+  margin-left: 13px; }
+
+.profile ul {
+  padding: 0;
+  margin: 10px 0px;
+  text-align: center; }
+  .profile ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 20px;
+    background: #192330;
+    margin-left: 5px;
+    cursor: pointer; }
+  .profile ul .active {
+    color: #f95959; }
+
+.search .cover {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: #192330;
+  padding: 12px 20px;
+  border-radius: 28px;
+  box-sizing: border-box; }
+  .search .cover form {
+    width: 100%; }
+    .search .cover form input {
+      width: 100%;
+      background: transparent;
+      border: 0;
+      padding: 0px 15px;
+      font-size: 1.4rem;
+      color: #bdbdbd; }

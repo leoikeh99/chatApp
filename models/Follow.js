@@ -6,8 +6,16 @@ const followSchema = mongoose.Schema({
     ref: "users",
   },
   following: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    username: {
+      type: String,
+    },
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+    },
+    bio: {
+      type: String,
+    },
   },
 });
 
