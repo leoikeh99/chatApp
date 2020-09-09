@@ -2,15 +2,47 @@ import React, { useEffect, useContext } from "react";
 import moment from "moment";
 import navContext from "../../context/nav/navContext";
 import Following from "../../components/users/Following";
+import Followers from "../../components/users/Followers";
+import usersContext from "../../context/users/usersContext";
+import Spinner from "../../components/layout/Spinner";
 
 const Profile = ({ user }) => {
+  const UsersContext = useContext(usersContext);
   const NavContext = useContext(navContext);
-  const { follow, setFollowers, setFollowing } = NavContext;
 
+  const {
+    following,
+    getFollowing,
+    followers,
+    getFollowers,
+    loader,
+    status,
+    clearStatus,
+  } = UsersContext;
+  const { follow, setFollowers, setFollowing, setUpdate } = NavContext;
   const { username, bio, createdAt } = user;
+
+  useEffect(() => {
+    clearStatus();
+  }, []);
+
+  useEffect(() => {
+    getFollowers();
+    getFollowing();
+
+    setTimeout(() => {
+      clearStatus();
+    }, 3000);
+  }, [status]);
+
   return (
     <section className="profile">
+      {status && <div className="alert2">{status}</div>}
       <div className="top">
+        <div className="edit">
+          <i class="far fa-edit" onClick={setUpdate}></i>
+        </div>
+
         <div className="flex">
           <img
             className="avatar"
@@ -30,17 +62,22 @@ const Profile = ({ user }) => {
           className={follow === "followers" ? "active" : null}
           onClick={setFollowers}
         >
-          Followers
+          {followers && `Followers: ${followers.length}`}
         </li>
         <li
           className={follow === "following" ? "active" : null}
           onClick={setFollowing}
         >
-          Following
+          {following && `Following: ${following.length}`}
         </li>
       </ul>
-
-      {follow === "following" ? <Following /> : null}
+      {follow == "following" && following ? (
+        <Following following={following} />
+      ) : follow == "followers" && followers ? (
+        <Followers followers={followers} />
+      ) : loader ? (
+        <Spinner />
+      ) : null}
     </section>
   );
 };

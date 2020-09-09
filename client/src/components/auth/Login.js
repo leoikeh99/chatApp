@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
+import $ from "jquery";
 
 const Login = (props) => {
   const AuthContext = useContext(authContext);
-  const { error, isAuthenticated, login } = AuthContext;
+  const { error, isAuthenticated, login, clearError } = AuthContext;
 
   const [active, setActive] = useState(null);
   const [email, setUsername] = useState("");
@@ -20,6 +21,14 @@ const Login = (props) => {
     }
   }, [isAuthenticated, props.history]);
 
+  // useEffect(() => {
+  //   if (error) {
+  //     setTimeout(() => {
+  //       clearError();
+  //     }, 4000);
+  //   }
+  // }, [error]);
+
   const submit = (e) => {
     e.preventDefault();
     login({
@@ -30,6 +39,7 @@ const Login = (props) => {
 
   return (
     <section className="auth">
+      {/* {error && <div className="error">{error}</div>} */}
       <div className="top">
         <div className="space">
           <h1 className="sac">Chatter</h1>

@@ -14,6 +14,7 @@ import {
   REGISTER_FAIL,
   GET_USER,
   USER_FAIL,
+  CLEAR_ERROR,
 } from "../types";
 
 const AuthState = (props) => {
@@ -56,7 +57,7 @@ const AuthState = (props) => {
       dispatch({ type: LOGIN, payload: res.data });
     } catch (err) {
       console.error(err);
-      dispatch({ type: LOGIN_FAIL, payload: err });
+      dispatch({ type: LOGIN_FAIL, payload: err.response.data.msg });
     }
   };
 
@@ -74,6 +75,9 @@ const AuthState = (props) => {
     }
   };
 
+  const logout = () => dispatch({ type: LOGOUT });
+  const clearError = () => dispatch({ type: CLEAR_ERROR });
+
   return (
     <AuthContext.Provider
       value={{
@@ -85,6 +89,8 @@ const AuthState = (props) => {
         loadUser,
         register,
         login,
+        logout,
+        clearError,
       }}
     >
       {props.children}

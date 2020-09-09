@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   GET_USER,
   USER_FAIL,
+  CLEAR_ERROR,
 } from "../types";
 
 export default (state, action) => {
@@ -21,6 +22,8 @@ export default (state, action) => {
         error: null,
         isAuthenticated: true,
       };
+
+    case LOGOUT:
     case USER_FAIL:
     case LOGIN_FAIL:
     case REGISTER_FAIL:
@@ -45,6 +48,12 @@ export default (state, action) => {
       return {
         ...state,
         loader: true,
+      };
+
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
 
     default:

@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 const auth = require("../middleware/auth");
+const { findById } = require("../models/User");
 
 router.post(
   "/",
@@ -65,5 +66,25 @@ router.post(
     }
   }
 );
+
+router.put("/", auth, async (req, res) => {
+  const id = req.user.id;
+  const { username, email, bio } = req.body;
+  try {
+    const update = {};
+    if (username) update.username = username;
+    if (email) update.email = email;
+    if (bio) update.bio = bio;
+
+    const user = await User.findById(id);
+
+    await User.findByIdAndUpdate(id, { $set: update }, { new: true });
+
+    res.json({ msg: "Profile updated successfully" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ msg: "server error" });
+  }
+});
 
 module.exports = router;

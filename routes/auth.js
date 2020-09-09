@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
+const Follow = require("../models/Follow");
 const auth = require("../middleware/auth");
 const { findOne } = require("../models/User");
 
@@ -58,7 +59,7 @@ router.post(
 //get a user
 router.get("/", auth, async (req, res) => {
   const value = req.query.value;
-  const { id } = req.user;
+  const id = req.user.id;
 
   if (!value) {
     try {
@@ -71,11 +72,35 @@ router.get("/", auth, async (req, res) => {
   } else {
     try {
       const users = await User.find({});
+
       const search = users.filter((user) => {
         const regex = new RegExp(`${value}`, "gi");
-        return user.username.match(regex) || user.email.match(regex);
+        return user.username.match(regex);
       });
-      res.json(search);
+
+      const check = search.map(async (value) => {
+        const following = await Follow.findOne({
+          "follower.id": id,
+          "following.id": value.id,
+        });
+        const followed = await Follow.findOne({
+          "follower.id": value.id,
+          "following.id": id,
+        });
+
+        return {
+          username: value.username,
+          id: value.id,
+          bio: value.bio,
+          joined: value.createdAt,
+          following: following ? true : false,
+          followed: followed ? true : false,
+        };
+      });
+
+      Promise.all(check).then((value) => {
+        res.json(value);
+      });
     } catch (err) {
       console.error(err);
       return res.status(500).json({ msg: "server error" });

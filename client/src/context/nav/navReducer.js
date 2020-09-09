@@ -4,6 +4,7 @@ import {
   SET_SEARCH,
   SET_FOLLOWERS,
   SET_FOLLOWING,
+  SET_UPDATE,
 } from "../types";
 
 export default (state, action) => {
@@ -22,6 +23,12 @@ export default (state, action) => {
       return {
         ...state,
         active: "search",
+      };
+
+    case SET_UPDATE:
+      return {
+        ...state,
+        active: "update",
       };
     case SET_FOLLOWERS:
       return {

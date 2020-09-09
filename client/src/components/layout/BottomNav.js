@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import navContext from "../../context/nav/navContext";
 
-const SideNav = () => {
+const BottomNav = () => {
   const NavContext = useContext(navContext);
   const { active, setProfile, setChat, setSearch } = NavContext;
   return (
@@ -9,11 +9,7 @@ const SideNav = () => {
       <ul>
         <li
           onClick={setProfile}
-          className={
-            active === "profile" || active === "update"
-              ? "color-secondary"
-              : null
-          }
+          className={active === "profile" ? "color-secondary" : null}
         >
           <i className="fa fa-user fa-2x" aria-hidden="true"></i>
         </li>
@@ -34,4 +30,4 @@ const SideNav = () => {
   );
 };
 
-export default SideNav;
+export default BottomNav;

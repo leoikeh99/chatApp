@@ -1,0 +1,46 @@
+//color schemes
+$background: #233142;
+$second-color: #455d7a;
+$primary-color: #f95959;
+$primary-text-color: #e3e3e3;
+$color-info: #757575;
+// $secondary-text-color: #757575;#212121
+$secondary-text-color: #bdbdbd;
+$icon-color: #000000;
+
+// $background: #152a38;
+// $second-color: #2f5241;
+// $secondary: #f95959;
+// $primary-text-color: #e4e5db;
+// $primary-text-color: #212121;
+// $secondary-text-color: #757575;
+// $secondary-text-color: #bdbdbd;
+// $icon-color: #000000;
+
+//keyframes
+@keyframes rotate {
+  0% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drop {
+  0% {
+    transform: translate(50%, -500%);
+  }
+  100% {
+    transform: translate(50%, -50%);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

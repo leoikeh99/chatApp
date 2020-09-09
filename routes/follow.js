@@ -7,17 +7,17 @@ const User = require("../models/User");
 
 //follow a user
 router.post("/", auth, async (req, res) => {
-  const follower = req.user.id;
   const following = req.body.id;
 
   try {
+    const follower = await User.findById(req.user.id);
     const user = await User.findById(following);
     if (!user) {
       return res.status(400).json({ msg: "user invalid" });
     }
 
     const checkFollow = await Follow.findOne({
-      follower,
+      "follower.id": follower.id,
       "following.id": user.id,
     });
     if (checkFollow) {
@@ -25,11 +25,17 @@ router.post("/", auth, async (req, res) => {
     }
 
     const follow = new Follow({
-      follower,
+      follower: {
+        username: follower.username,
+        id: follower.id,
+        bio: follower.bio,
+        joined: follower.createdAt,
+      },
       following: {
         username: user.username,
         id: user.id,
         bio: user.bio,
+        joined: user.createdAt,
       },
     });
 
@@ -49,10 +55,42 @@ router.get("/:id", auth, async (req, res) => {
   try {
     if (type === "followers") {
       const followers = await Follow.find({ "following.id": user });
-      return res.json(followers);
+      const data = followers.map(async (value) => {
+        const check = await Follow.findOne({
+          "follower.id": user,
+          "following.id": value.follower.id,
+        });
+        return {
+          username: value.follower.username,
+          bio: value.follower.bio,
+          id: value.follower.id,
+          following: check ? true : false,
+          joined: value.follower.joined,
+        };
+      });
+      Promise.all(data).then((value) => {
+        res.json(value);
+      });
     } else if (type === "following") {
-      const following = await Follow.find({ follower: user });
-      return res.json(following);
+      const following = await Follow.find({ "follower.id": user });
+      const data = following.map(async (value) => {
+        const check = await Follow.findOne({
+          "follower.id": value.following.id,
+          "following.id": user,
+        });
+
+        return {
+          username: value.following.username,
+          bio: value.following.bio,
+          id: value.following.id,
+          following: true,
+          followed: check ? true : false,
+          joined: value.follower.joined,
+        };
+      });
+      Promise.all(data).then((value) => {
+        res.json(value);
+      });
     } else {
       return res.status(400).json({ msg: `cannot get /api/follow/${type}` });
     }
@@ -63,17 +101,20 @@ router.get("/:id", auth, async (req, res) => {
 });
 
 //unfollow a user
-router.delete("/", auth, async (req, res) => {
-  const follower = req.user.id;
-  const following = req.body.username;
+router.delete("/:id", auth, async (req, res) => {
+  const id = req.user.id;
+  const following = req.params.id;
 
   try {
-    const user = await User.findOne({ username: following });
+    const user = await User.findById(following);
     if (!user) {
       return res.status(400).json({ msg: "user invalid" });
     }
 
-    const checkFollow = await Follow.findOne({ follower, following });
+    const checkFollow = await Follow.findOne({
+      "follower.id": id,
+      "following.id": user.id,
+    });
     if (!checkFollow) {
       return res.status(400).json({ msg: "You do not follow this user" });
     }

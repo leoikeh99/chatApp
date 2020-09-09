@@ -1,15 +1,13 @@
-import React, { Fragment, useEffect, useContext } from "react";
-import usersContext from "../../context/users/usersContext";
+import React, { Fragment } from "react";
+
 import Users from "./Users";
 
-const Followers = () => {
-  const UsersContext = useContext(usersContext);
-  const { following, getFollowing } = UsersContext;
-
-  useEffect(() => {
-    getFollowing();
-  }, [following]);
-  return <Fragment>{following && <Users users={following} />}</Fragment>;
+const Following = ({ following }) => {
+  return (
+    <Fragment>
+      <div className="follow">{following && <Users users={following} />}</div>
+    </Fragment>
+  );
 };
 
-export default Followers;
+export default Following;

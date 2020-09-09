@@ -44,6 +44,7 @@ const Register = (props) => {
 
   return (
     <section className="auth">
+      {/* <div className="error">error</div> */}
       <div className="top">
         <div className="space">
           <h1 className="sac">Chatter</h1>

@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import usersContext from "../../context/users/usersContext";
+import Users from "../../components/users/Users";
+import Spinner from "../../components/layout/Spinner";
 
 const SearchUsers = () => {
   const UsersContext = useContext(usersContext);
-  const { users, searchUsers } = UsersContext;
+  const { loader, users, searchUsers } = UsersContext;
 
   const [search, setSearch] = useState("");
 
@@ -25,6 +27,10 @@ const SearchUsers = () => {
           />
         </form>
       </div>
+      <div className="results">
+        {users && !loader && <Users users={users} />}
+      </div>
+      {loader && <Spinner />}
     </section>
   );
 };

@@ -8,6 +8,7 @@ import {
   SET_SEARCH,
   SET_FOLLOWERS,
   SET_FOLLOWING,
+  SET_UPDATE,
 } from "../types";
 
 const NavState = (props) => {
@@ -21,6 +22,7 @@ const NavState = (props) => {
   const setProfile = () => dispatch({ type: SET_PROFILE });
   const setChat = () => dispatch({ type: SET_CHAT });
   const setSearch = () => dispatch({ type: SET_SEARCH });
+  const setUpdate = () => dispatch({ type: SET_UPDATE });
   const setFollowers = () => dispatch({ type: SET_FOLLOWERS });
   const setFollowing = () => dispatch({ type: SET_FOLLOWING });
 
@@ -34,6 +36,7 @@ const NavState = (props) => {
         setSearch,
         setFollowers,
         setFollowing,
+        setUpdate,
       }}
     >
       {props.children}
