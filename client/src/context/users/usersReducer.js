@@ -15,6 +15,7 @@ import {
   UPDATE_SUCCESS,
   VIEW_PROFILE,
   CLEAR_VIEW,
+  SEARCH_FAIL,
 } from "../types";
 
 export default (state, action) => {
@@ -37,6 +38,12 @@ export default (state, action) => {
       return {
         ...state,
         users: action.payload,
+        loader: null,
+      };
+    case SEARCH_FAIL:
+      return {
+        ...state,
+        users: [],
         loader: null,
       };
 

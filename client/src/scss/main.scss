@@ -1,4 +1,5 @@
 @import "config";
+@import "spinner";
 @import "mobile";
 
 body {
@@ -6,41 +7,12 @@ body {
   margin: 0;
   background: $background;
   font-family: "Montserrat", sans-serif;
-}
-
-*,
-*:focus,
-*:hover {
-  outline: none;
-}
-
-.sac {
-  font-family: "Sacramento", cursive;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
+  color: $primary-text-color;
 }
 
 .container {
-  max-width: 80%;
+  width: 85%;
   margin: auto;
-}
-
-.container2 {
-  max-width: 56.25rem;
-  margin: auto;
-}
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .space {
@@ -49,500 +21,380 @@ h6 {
   align-items: center;
 }
 
-.btn-success {
-  padding: 0.4375rem;
-  border: 0;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-gap: 10px;
+}
+
+.inline {
+  max-width: 400px;
+  margin: auto;
+  .card {
+    padding: 10px 35px;
+  }
+}
+
+.btn-primary {
+  padding: 8px;
+  color: $primary-text-color;
   background: $primary-color;
-  color: $primary-text-color;
-  border-radius: 0.2rem;
-  cursor: pointer;
-  &:hover {
-    background: darken($primary-color, 5);
-  }
-}
-.btn-info {
-  padding: 0.4375rem;
   border: 0;
-  background: $second-color;
-  color: $primary-text-color;
-  border-radius: 0.2rem;
+  border-radius: 3px;
+  margin: 3px 0px;
   cursor: pointer;
   &:hover {
-    background: darken($second-color, 5);
+    background: darken($primary-color, $amount: 5);
   }
 }
 
-.text-center {
-  text-align: center;
+.btn-secondary {
+  padding: 8px;
+  color: $primary-text-color;
+  background: $secondary-color;
+  border: 0;
+  border-radius: 3px;
+  margin: 3px 0px;
+  cursor: pointer;
+  &:hover {
+    background: darken($secondary-color, $amount: 5);
+  }
 }
 
-.color-info {
-  color: $color-info;
-}
-
-.pill {
-  display: inline-block;
-  padding: 3.5px;
-  border-radius: 25px;
-  background: $second-color;
-}
-
-.auth {
+.navBar {
+  padding: 2px 0px;
+  background: darken($background, $amount: 5);
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 100vh;
-  color: $secondary-text-color;
-  position: relative;
-  .top {
-    padding: 1.25rem 1.875rem;
-    font-size: 2rem;
-    color: $primary-text-color;
 
-    a {
-      color: $secondary-text-color;
-      font-size: 1rem;
-      text-decoration: none;
-      display: inline-block;
-      padding: 0.625rem;
-      background: darken($background, 5.5);
-      border-radius: 0.2rem;
-
-      &:hover {
-        color: $primary-color;
-      }
-    }
-  }
-
-  .sub {
-    max-width: 25rem;
+  .container {
+    width: 93%;
     margin: auto;
-    margin-top: 1rem;
   }
-
-  h2 {
-    text-align: center;
-    margin-bottom: 1.875rem;
+  h1 {
+    padding: 0;
+    margin: 0;
+    font-family: "sacramento";
+    font-size: 2.2rem;
   }
-
-  form {
-    input {
-      width: 100%;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      padding: 0.94rem;
-      border: 0;
-      background: darken($background, 5.5);
-      color: $primary-text-color;
-      margin-top: 0.32rem;
-      margin-bottom: 0.94rem;
-    }
-  }
-
-  .active {
-    border-bottom: 0.13rem solid $primary-color;
-  }
-
-  input[type="submit"] {
-    background: $primary-color;
+  a {
+    text-decoration: none;
     color: $primary-text-color;
-    font-size: 1rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    margin-top: 0;
-    padding: 0.75rem;
-
+    padding: 5px 10px;
+    background: $primary-color;
+    border-radius: 4px;
     &:hover {
       background: darken($primary-color, 4);
     }
   }
 }
 
-.home {
-  color: $secondary-text-color;
-  position: relative;
+.auth {
+  max-width: 500px;
+  margin: auto;
   height: 100vh;
-  overflow-y: hidden;
-  .top {
-    padding: 1.25rem 1.875rem;
-    font-size: 1.2rem;
-    color: $primary-text-color;
+  display: flex;
+  align-items: center;
+  .sub {
+    h2 {
+      text-align: center;
+    }
+  }
+  form {
+    input {
+      padding: 18px;
+      box-sizing: border-box;
+      display: block;
+      width: 100%;
+      border-radius: 5px;
+      margin-bottom: 11px;
+      margin-top: 5px;
+      border: 0px;
+      background: darken($background, $amount: 5);
+      color: $primary-text-color;
+    }
 
-    .logout {
-      background: transparent;
+    input[type="submit"] {
+      background: $primary-color;
       color: $primary-text-color;
       font-size: 1.1rem;
-      border: 0;
+      margin-top: 12px;
+      padding: 12px;
       cursor: pointer;
       &:hover {
-        color: darken($primary-color, 6.5);
+        background: darken($primary-color, 4);
+      }
+    }
+
+    label {
+      color: $secondary-text-color;
+    }
+  }
+}
+
+.home {
+  .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 2;
+    position: fixed;
+  }
+  .alert {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    p {
+      margin: 5px 0px;
+    }
+    .confirm {
+      padding: 15px 25px;
+      background: darken($background, $amount: 4);
+      border-radius: 5px;
+      box-sizing: border-box;
+      button {
+        margin: 0px 3px;
+      }
+    }
+    .viewProfile {
+      position: relative;
+      padding: 15px 25px;
+      background: darken($background, $amount: 4);
+      border-radius: 5px;
+      box-sizing: border-box;
+      max-width: 500px;
+      margin: 0px 6px;
+      img {
+        max-width: 70px;
+      }
+
+      .close {
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        cursor: pointer;
       }
     }
   }
-
-  .color-secondary {
-    color: $primary-color;
-  }
-
-  #body {
-    display: grid;
-    grid-template-columns: 13% 87%;
-    padding: 0px 0.813rem;
-
-    .sideNav {
-      display: flex;
-      justify-content: center;
-      ul {
-        padding: 0;
-        margin: 0;
-
-        li {
-          list-style: none;
-          width: 4.375rem;
-          height: 4.375rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 0.563rem;
-          border-radius: 2.2rem;
-          text-align: center;
-          background: darken($background, 5.5);
-          cursor: pointer;
-          &:hover {
-            animation: rotate 0.5s forwards;
-          }
+  .sideNav {
+    ul {
+      padding: 0;
+      margin: 0;
+      position: fixed;
+      height: 100vh;
+      overflow: hidden;
+      background: darken($background, $amount: 4);
+      padding-top: 70px;
+      width: 200px;
+      li {
+        list-style: none;
+        font-size: 1.2rem;
+        padding: 18px 15px;
+        width: 100%;
+        box-sizing: border-box;
+        cursor: pointer;
+        &:hover {
+          background: darken($background, $amount: 5.5);
+        }
+        i {
+          margin-right: 10px;
         }
       }
+    }
+    .active {
+      color: $primary-color;
+      background: darken($background, $amount: 7);
     }
   }
 
   .bottomNav {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    padding: 15px 0px;
-    background: darken($background, 8);
     display: none;
 
     ul {
       padding: 0;
       margin: 0;
       display: flex;
-      justify-content: space-between;
-      width: 85%;
-      margin: auto;
+      text-align: center;
+      background: darken($background, $amount: 5);
       li {
         list-style: none;
+        display: inline-block;
+        padding: 15px 10px;
+        flex-basis: 33.3%;
+      }
+      .active {
+        color: $primary-color;
+        background: darken($background, $amount: 7);
       }
     }
   }
-
-  .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    background: darken($background, 9.5);
-    top: 0;
-    left: 0;
-    opacity: 0.5;
-    display: none;
-    overflow: hidden;
-    z-index: 2;
+  .main {
+    padding-top: 55px;
+    padding-left: 200px;
   }
-
-  .mainStage {
-    position: relative;
-  }
-
-  .alert {
-    padding: 1.25rem;
-    text-align: center;
-    max-width: 20rem;
-    display: inline-block;
-    background: darken($background, 8.5);
-    border-radius: 0.5rem;
-    z-index: 3;
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    margin: auto;
-    transform: translate(50%, -900%);
-    // animation-name: drop;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    button {
-      margin-right: 0.32rem;
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin: 0.5rem 0px;
-      margin-top: 0;
-    }
-  }
-  .viewProfile {
-    text-align: center;
-    background: darken($background, 9.5);
-    padding: 20px;
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    border-radius: 0.5rem;
-    transform: translate(50%, -900%);
-    // animation-name: drop;
-    animation-duration: 0.5s;
-    animation-fill-mode: forwards;
-    margin: auto;
-    z-index: 2;
-    max-width: 20rem;
-    height: 200px;
-    display: inline-block;
-    p {
-      margin: 5px 0px;
-    }
-    img {
-      max-width: 100px;
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      font-size: 25px;
-      cursor: pointer;
-    }
-  }
-}
-
-.follow {
-  height: 58vh;
-  overflow-y: scroll;
-  margin-bottom: 1.25rem;
-}
-
-::-webkit-scrollbar {
-  width: 2px;
-}
-::-webkit-scrollbar-thumb {
-  background: darken($background, 8);
-  border-radius: 0.25rem;
-  height: 0.32rem;
 }
 
 .profile {
-  position: relative;
-  .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  img {
-    width: 100%;
-  }
-  h2 {
-    margin-left: 0.813rem;
-    color: $secondary-text-color;
-  }
-  .flex {
-    display: flex;
-  }
-  .top {
-    background: darken($background, 5.5);
-    border-radius: 0.625rem;
-    padding: 0.94rem;
-  }
-  .bio {
-    margin-left: 0.813rem;
-    font-size: 0.9rem;
-    margin-top: 0.32rem;
-    background: darken($background, 8.5);
-    padding: 0.5rem;
-    display: inline-block;
-    border-radius: 0.5rem;
-  }
-  .alert2 {
-    position: absolute;
-    bottom: 55px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    padding: 8px;
-    border-radius: 5px;
-    background: #1d8522;
-    z-index: 1;
-  }
-  p {
-    margin: 0.32rem 0px;
-    font-size: 0.8rem;
-    margin-left: 0.813rem;
-  }
-
+  padding: 0px 10px;
+  margin-bottom: 10px;
   ul {
     padding: 0;
-    margin: 0.625rem 0px;
-    text-align: center;
+    margin: 0;
     li {
       list-style: none;
-      display: inline-block;
-      padding: 0.625rem 0.94rem;
-      border-radius: 1.25rem;
-      background: darken($background, 5.5);
-      margin-left: 0.32rem;
-      cursor: pointer;
     }
+  }
+  .image {
+    text-align: center;
+    position: relative;
+    img {
+      max-width: 150px;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      top: -123px;
+    }
+  }
+
+  ul.nav {
+    text-align: center;
+    margin-bottom: 8px;
     .active {
       color: $primary-color;
     }
-  }
-
-  .edit {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    i {
-      color: $primary-text-color;
+    li {
+      display: inline-block;
+      padding: 15px;
+      margin-left: 5px;
+      border-radius: 5px;
+      background: darken($background, $amount: 6);
       cursor: pointer;
-      &:hover {
-        color: darken($primary-color, 5.5);
-      }
     }
   }
-}
-
-.user {
-}
-
-.search {
   .cover {
     width: 100%;
-    display: flex;
-    align-items: center;
-    background: darken($background, 5.5);
-    padding: 0.75rem 1.25rem;
-    border-radius: 20.5rem;
-    box-sizing: border-box;
-    margin-bottom: 5px;
-
-    form {
-      width: 100%;
-      input {
-        width: 100%;
-        background: transparent;
-        border: 0;
-        padding: 0px 0.94rem;
-        font-size: 1.4rem;
-        color: $secondary-text-color;
+    .details {
+      margin: auto;
+      max-width: 500px;
+      margin-top: 140px;
+      box-sizing: border-box;
+      top: -30px;
+      left: 0;
+      // display: flex;
+      background: darken($background, $amount: 6);
+      padding: 30px;
+      border-radius: 8px;
+      z-index: -1;
+      margin-bottom: 9px;
+      h2 {
+        margin: 10px 0px;
+      }
+      .first {
+        // flex-basis: 50%;
+        display: flex;
+        // align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0px 8px;
+        // border-right: 2px solid $primary-text-color;
+        ul {
+          li {
+            padding: 3px 10px;
+          }
+        }
+      }
+      .second {
+        flex-basis: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        ul {
+          li {
+            font-size: 1.5rem;
+            display: inline-block;
+            padding: 0px 7px;
+          }
+        }
       }
     }
   }
-
-  .results {
-    height: 77vh;
-    overflow-y: scroll;
-    margin-bottom: 1.25rem;
-  }
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
-  grid-gap: 1.25rem;
-  margin-right: 0.2rem !important;
 }
 
 .card {
+  padding: 10px;
   text-align: center;
-  padding: 1.875rem 0px;
-  background: darken($background, 5.5);
-  border-radius: 0.625rem;
-  position: relative;
+  background: darken($background, $amount: 6);
+  border-radius: 7px;
+  h3,
   p {
-    margin: 0;
-    padding: 0.32rem 0px;
-    font-size: 1rem;
+    margin: 3px 0px;
   }
-  h1 {
-    margin: 0;
-    color: $secondary-text-color;
-    cursor: pointer;
+
+  h3 {
     &:hover {
       color: $primary-color;
+      cursor: pointer;
       text-decoration: underline;
     }
   }
+
   img {
-    width: 5.625rem;
-  }
-
-  .pill {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 8px;
-    color: $primary-text-color;
+    max-width: 90px;
   }
 }
 
-.error {
-  position: absolute;
-  bottom: 55px;
-  left: 50%;
-  transform: translate(-50%, 0);
-  padding: 8px;
-  border-radius: 5px;
-  background: #ed1c24;
-}
+.search {
+  box-sizing: border-box;
+  padding: 0px 10px;
+  margin-bottom: 10px;
+  .cover {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 
-.update {
-  h2 {
-    margin-bottom: 9px;
-  }
-  form {
-    input,
-    textarea {
-      box-sizing: border-box;
-      display: block;
-      padding: 13px;
-      width: 400px;
-      border-radius: 5px;
-      background: darken($background, 5.5);
-      border: 0;
-      margin-bottom: 5px;
-      color: $primary-text-color;
-    }
-    textarea {
-      padding: 12px;
-      height: 90px;
-    }
-    label {
-      display: inline-block;
-      margin-top: 10px;
-      margin-bottom: 3px;
-    }
-    input[type="submit"] {
-      background: $primary-color;
-      color: $primary-text-color;
-      margin-top: 15px;
-      cursor: pointer;
-      &:hover {
-        background: darken($primary-color, 5);
+    form {
+      max-width: 600px;
+      margin: auto;
+      position: relative;
+      input {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 17px;
+        border: 0;
+        background: darken($background, $amount: 6);
+        border-radius: 28px;
+        color: $primary-text-color;
+        font-size: 1.3rem;
+      }
+      i {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 1.6rem;
       }
     }
   }
-  i {
-    margin-right: 10px;
-    cursor: pointer;
-    &:hover {
-      color: $primary-color;
-    }
-  }
-
-  .alert3 {
-    width: 400px;
-    text-align: center;
-    background: #1d8522;
-    padding: 7px;
-    margin-top: 9px;
+  .view {
+    max-width: 1000px;
     box-sizing: border-box;
-    border-radius: 5px;
+    padding: 0px 7px;
+    margin: auto;
   }
 }

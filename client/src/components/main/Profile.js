@@ -1,82 +1,78 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import profile_pic from "../layout/img/profilepic.png";
+import UsersContext from "../../context/users/usersContext";
 import moment from "moment";
-import navContext from "../../context/nav/navContext";
-import Following from "../../components/users/Following";
-import Followers from "../../components/users/Followers";
-import usersContext from "../../context/users/usersContext";
+import Users from "../../components/users/Users";
+import NavContext from "../../context/nav/navContext";
 import Spinner from "../../components/layout/Spinner";
 
 const Profile = ({ user }) => {
-  const UsersContext = useContext(usersContext);
-  const NavContext = useContext(navContext);
-
+  const usersContext = useContext(UsersContext);
   const {
-    following,
+    getFollowers,
     getFollowing,
     followers,
-    getFollowers,
-    loader,
+    following,
     status,
     clearStatus,
-  } = UsersContext;
-  const { follow, setFollowers, setFollowing, setUpdate } = NavContext;
-  const { username, bio, createdAt } = user;
-
-  useEffect(() => {
-    clearStatus();
-  }, []);
+    clearConfirm,
+  } = usersContext;
+  const navContext = useContext(NavContext);
+  const { follow, setFollow } = navContext;
+  const { username, _id, email, createdAt, bio } = user;
 
   useEffect(() => {
     getFollowers();
     getFollowing();
-
-    setTimeout(() => {
-      clearStatus();
-    }, 3000);
+    clearStatus();
+    clearConfirm();
   }, [status]);
 
   return (
     <section className="profile">
-      {status && <div className="alert2">{status}</div>}
-      <div className="top">
-        <div className="edit">
-          <i class="far fa-edit" onClick={setUpdate}></i>
-        </div>
-
-        <div className="flex">
-          <img
-            className="avatar"
-            src="https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_960_720.jpg"
-            alt=""
-          />
-          <div>
-            <h2>@{username}</h2>
-            <div className="bio">Bio: {bio}</div>
-            <p>Joined at: {moment(createdAt).format("LL")}</p>
+      <div className="image">
+        <img src={profile_pic} alt="" />
+      </div>
+      <div className="cover">
+        <div className="details">
+          <div className="first">
+            <div>
+              <h2>@{username}</h2>
+              <ul>
+                <li>Email: {email}</li>
+                <li>Joined at: {moment(createdAt).format("LL")}</li>
+                <li>Bio: {bio}</li>
+              </ul>
+            </div>
           </div>
+          {/* <div className="second">
+            <div>
+              <ul>
+                <li>Followers: {followers.length}</li>
+                <li>Following: {following.length}</li>
+              </ul>
+            </div>
+          </div> */}
         </div>
       </div>
-
-      <ul>
+      <ul className="nav">
         <li
+          onClick={() => setFollow("followers")}
           className={follow === "followers" ? "active" : null}
-          onClick={setFollowers}
         >
-          {followers && `Followers: ${followers.length}`}
+          Followers: {followers.length}
         </li>
         <li
+          onClick={() => setFollow("following")}
           className={follow === "following" ? "active" : null}
-          onClick={setFollowing}
         >
-          {following && `Following: ${following.length}`}
+          Following: {following.length}
         </li>
       </ul>
-      {follow == "following" && following ? (
-        <Following following={following} />
-      ) : follow == "followers" && followers ? (
-        <Followers followers={followers} />
-      ) : loader ? (
-        <Spinner />
+      {follow === "following" ? (
+        <Users users={following} />
+      ) : follow === "followers" ? (
+        <Users users={followers} />
       ) : null}
     </section>
   );

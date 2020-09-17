@@ -1,136 +1,94 @@
-import React, { useContext, useEffect, Fragment } from "react";
-import authContext from "../../context/auth/authContext";
-import navContext from "../../context/nav/navContext";
-import usersContext from "../../context/users/usersContext";
-import SideNav from "../layout/SideNav";
-import Profile from "../main/Profile";
-import Chat from "../main/Chat";
-import SearchUsers from "../main/SearchUsers";
-import Spinner from "../../components/layout/Spinner";
+import React, { Fragment, useContext, useEffect } from "react";
+import AuthContext from "../../context/auth/authContext";
+import NavContext from "../../context/nav/navContext";
+import SideNav from "../../components/layout/SideNav";
 import BottomNav from "../../components/layout/BottomNav";
-import UpdateProfile from "../../components/main/UpdateProfile";
-import profile_pic from "../../components/layout/img/profilepic.png";
+import Profile from "../../components/main/Profile";
+import Chat from "../../components/main/Chat";
+import SearchUsers from "../../components/main/SearchUsers";
+import Spinner from "../../components/layout/Spinner";
+import UsersContext from "../../context/users/usersContext";
+import profile_pic from "../layout/img/profilepic.png";
 import moment from "moment";
-import $ from "jquery";
 
-const Home = () => {
-  const AuthContext = useContext(authContext);
-  const { loadUser, user, logout, loader } = AuthContext;
+const Home = (props) => {
+  const navContext = useContext(NavContext);
+  const { setNav, active } = navContext;
 
-  const NavContext = useContext(navContext);
-  const { active } = NavContext;
+  const authContext = useContext(AuthContext);
+  const { loadUser, isAuthenticated, user, loader } = authContext;
 
-  const UsersContext = useContext(usersContext);
+  const usersContext = useContext(UsersContext);
   const {
     confirm,
-    unfollowUser,
     clearConfirm,
-    loader2,
-    error,
+    unfollowUser,
     profile,
     clearProfile,
-  } = UsersContext;
+  } = usersContext;
 
   useEffect(() => {
+    setNav("/");
     loadUser();
-  }, []);
-
-  useEffect(() => {
-    const alert = $(".alert");
-    const overlay = $(".overlay");
-    const viewProfile = $(".viewProfile");
-
-    if (confirm) {
-      alert.css("display", "inline-block");
-      alert.css("animationName", "drop");
-      overlay.css("display", "block");
-    } else {
-      alert.css("display", "none");
-    }
-
-    if (profile) {
-      viewProfile.css("display", "inline-block");
-      viewProfile.css("animationName", "drop");
-      overlay.css("display", "block");
-    } else {
-      viewProfile.css("display", "none");
-    }
-
-    if (!profile && !confirm) {
-      overlay.css("display", "none");
-    }
-  }, [confirm, profile]);
+  }, [isAuthenticated, props.history]);
 
   return (
-    <Fragment>
-      {loader && <Spinner />}
-      {user && (
-        <div className="home">
-          <div className="overlay"> </div>
+    <section className="home">
+      {confirm || profile ? (
+        <Fragment>
+          <div className="overlay"></div>
           <div className="alert">
-            {loader2 ? (
-              <Spinner />
-            ) : (
-              <Fragment>
-                <p>Unfollow @{confirm && confirm.name}?</p>
-                <button
-                  className="btn-info"
-                  onClick={() => confirm && unfollowUser(confirm.id)}
-                >
-                  Unfollow
-                </button>
-                <button className="btn-success" onClick={() => clearConfirm()}>
-                  Cancel
-                </button>
-              </Fragment>
+            {confirm && (
+              <div className="confirm">
+                <p>Unfollow {confirm.name}?</p>
+                <div className="buttons">
+                  <button
+                    className="btn-secondary"
+                    onClick={() => unfollowUser(confirm.id)}
+                  >
+                    Unfollow
+                  </button>
+                  <button className="btn-primary" onClick={clearConfirm}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+            {profile && (
+              <div className="viewProfile">
+                <div onClick={clearProfile} className="close">
+                  X
+                </div>
+                <img src={profile_pic} alt="" />
+                <p>@{profile.username}</p>
+                <p>Joined at: {moment(profile.joined).format("LL")}</p>
+                <p>Bio: {profile.bio}</p>
+              </div>
             )}
           </div>
-
-          {profile && (
-            <div className="viewProfile">
-              <img className="avatar" src={profile_pic} alt="" />
-              <h1>@{profile.username}</h1>
-              <p>Bio: {profile.bio}</p>
-              <p>Joined: {moment(profile.joined).format("LL")}</p>
-              <span className="close" onClick={clearProfile}>
-                X
-              </span>
-            </div>
-          )}
-
-          <div className="top">
-            <div className="space">
-              <h1 className="sac">Chatter</h1>
-              <button to="/login" className="logout" onClick={logout}>
-                <i className="fas fa-power-off"></i> Logout
-              </button>
-            </div>
+        </Fragment>
+      ) : null}
+      <div className="sideNav">
+        <SideNav />
+      </div>
+      <div className="bottomNav">
+        <BottomNav />
+      </div>
+      <div className="main" id="main">
+        {user && (
+          <div>
+            {active === "profile" ? (
+              <Profile user={user} />
+            ) : active === "chat" ? (
+              <Chat user={user} />
+            ) : active === "search" ? (
+              <SearchUsers user={user} />
+            ) : null}{" "}
           </div>
-          <div className="container2">
-            <div id="body">
-              <div className="sideNav">
-                <SideNav />
-              </div>
-              <div className="mainStage">
-                {error && <div className="error">error</div>}
-                {active === "profile" ? (
-                  <Profile user={user} />
-                ) : active === "chat" ? (
-                  <Chat user={user} />
-                ) : active === "search" ? (
-                  <SearchUsers user={user} />
-                ) : active === "update" ? (
-                  <UpdateProfile user={user} />
-                ) : null}
-              </div>
-            </div>
-          </div>
-          <div className="bottomNav">
-            <BottomNav />
-          </div>
-        </div>
-      )}
-    </Fragment>
+        )}
+        {loader && <Spinner />}
+      </div>
+    </section>
   );
 };
 

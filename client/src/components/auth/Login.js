@@ -1,15 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
+import NavContext from "../../context/nav/navContext";
 import $ from "jquery";
 
 const Login = (props) => {
+  const navContext = useContext(NavContext);
+  const { setNav } = navContext;
+
   const AuthContext = useContext(authContext);
   const { error, isAuthenticated, login, clearError } = AuthContext;
 
   const [active, setActive] = useState(null);
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    setNav("login");
+  }, []);
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", () => {
@@ -40,18 +48,12 @@ const Login = (props) => {
   return (
     <section className="auth">
       {/* {error && <div className="error">{error}</div>} */}
-      <div className="top">
-        <div className="space">
-          <h1 className="sac">Chatter</h1>
-          <Link to="/register">Register</Link>
-        </div>
-      </div>
 
       <div className="container">
         <div className="sub">
           <h2>Login</h2>
           <form action="" onSubmit={submit}>
-            <label htmlFor="">Email</label>
+            <label htmlFor="">Email:</label>
             <input
               type="email"
               onClick={() => setActive("username")}
@@ -60,7 +62,7 @@ const Login = (props) => {
               required
             />
 
-            <label htmlFor="">Password</label>
+            <label htmlFor="">Password:</label>
             <input
               type="password"
               onClick={() => setActive("password")}

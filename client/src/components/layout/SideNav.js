@@ -3,31 +3,30 @@ import navContext from "../../context/nav/navContext";
 
 const SideNav = () => {
   const NavContext = useContext(navContext);
-  const { active, setProfile, setChat, setSearch } = NavContext;
+  const { active, setActive } = NavContext;
   return (
     <div>
       <ul>
         <li
-          onClick={setProfile}
-          className={
-            active === "profile" || active === "update"
-              ? "color-secondary"
-              : null
-          }
+          onClick={() => setActive("profile")}
+          className={active === "profile" ? "active" : null}
         >
-          <i className="fa fa-user fa-2x" aria-hidden="true"></i>
+          <i className="fa fa-user " aria-hidden="true"></i>
+          <span className="text"> Profile</span>
         </li>
         <li
-          onClick={setChat}
-          className={active === "chat" ? "color-secondary" : null}
+          onClick={() => setActive("chat")}
+          className={active === "chat" ? "active" : null}
         >
-          <i className="fas fa-comment-alt fa-2x"></i>
+          <i className="fas fa-comment-alt "></i>
+          <span className="text"> Chat</span>
         </li>
         <li
-          onClick={setSearch}
-          className={active === "search" ? "color-secondary" : null}
+          onClick={() => setActive("search")}
+          className={active === "search" ? "active" : null}
         >
-          <i className="fas fa-search fa-2x"></i>
+          <i className="fas fa-search "></i>
+          <span className="text"> Search</span>
         </li>
       </ul>
     </div>

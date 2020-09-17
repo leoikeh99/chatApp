@@ -1,15 +1,13 @@
-import React, { Fragment } from "react";
-import User from "./User";
+import React from "react";
+import User from "../../components/users/User";
 
 const Users = ({ users }) => {
   return (
-    <Fragment>
-      <div className="grid" style={{ margin: "20px 0px" }}>
-        {users.map((user) => (
-          <User key={user.id} user={user} />
-        ))}
-      </div>
-    </Fragment>
+    <div className={users.length > 1 ? "grid" : "inline"}>
+      {users.map((user) => (
+        <User key={user.id} user={user} />
+      ))}
+    </div>
   );
 };
 

@@ -85,7 +85,7 @@ router.get("/:id", auth, async (req, res) => {
           id: value.following.id,
           following: true,
           followed: check ? true : false,
-          joined: value.follower.joined,
+          joined: value.following.joined,
         };
       });
       Promise.all(data).then((value) => {

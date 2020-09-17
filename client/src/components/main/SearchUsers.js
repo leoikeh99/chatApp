@@ -1,36 +1,41 @@
-import React, { useContext, useState } from "react";
-import usersContext from "../../context/users/usersContext";
+import React, { useContext, useEffect, useState } from "react";
+import UsersContext from "../../context/users/usersContext";
 import Users from "../../components/users/Users";
 import Spinner from "../../components/layout/Spinner";
 
 const SearchUsers = () => {
-  const UsersContext = useContext(usersContext);
-  const { loader, users, searchUsers } = UsersContext;
-
-  const [search, setSearch] = useState("");
-
+  const [search, setSearch] = useState(null);
+  const usersContext = useContext(UsersContext);
+  const { users, searchUsers, clearUsers, loader } = usersContext;
   const submit = (e) => {
     e.preventDefault();
     if (search !== "") {
       searchUsers(search);
+    } else {
+      clearUsers();
     }
   };
+
+  useEffect(() => {
+    clearUsers();
+  }, []);
+
   return (
-    <section className="search">
+    <section className="search" onSubmit={submit}>
       <div className="cover">
-        <i className="fas fa-search fa-2x"></i>
-        <form action="" onSubmit={submit}>
+        <form action="">
+          <i class="fa fa-search" aria-hidden="true"></i>
           <input
             type="text"
             placeholder="Search users..."
-            onKeyUp={(e) => setSearch(e.target.value.trim())}
+            onChange={(e) => setSearch(e.target.value.trim())}
           />
         </form>
       </div>
-      <div className="results">
-        {users && !loader && <Users users={users} />}
+      <div className="view">
+        {users.length !== 0 && !loader ? <Users users={users} /> : <div></div>}
+        {loader && <Spinner />}
       </div>
-      {loader && <Spinner />}
     </section>
   );
 };

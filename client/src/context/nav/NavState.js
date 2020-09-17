@@ -2,41 +2,30 @@ import React, { useReducer } from "react";
 import navReducer from "./navReducer";
 import navContext from "./navContext";
 
-import {
-  SET_PROFILE,
-  SET_CHAT,
-  SET_SEARCH,
-  SET_FOLLOWERS,
-  SET_FOLLOWING,
-  SET_UPDATE,
-} from "../types";
+import { SET_ACTIVE, SET_FOLLOW, SET_NAV } from "../types";
 
 const NavState = (props) => {
   const initialState = {
     active: "profile",
     follow: "followers",
+    nav: "login",
   };
 
   const [state, dispatch] = useReducer(navReducer, initialState);
 
-  const setProfile = () => dispatch({ type: SET_PROFILE });
-  const setChat = () => dispatch({ type: SET_CHAT });
-  const setSearch = () => dispatch({ type: SET_SEARCH });
-  const setUpdate = () => dispatch({ type: SET_UPDATE });
-  const setFollowers = () => dispatch({ type: SET_FOLLOWERS });
-  const setFollowing = () => dispatch({ type: SET_FOLLOWING });
+  const setActive = (active) => dispatch({ type: SET_ACTIVE, payload: active });
+  const setFollow = (follow) => dispatch({ type: SET_FOLLOW, payload: follow });
+  const setNav = (nav) => dispatch({ type: SET_NAV, payload: nav });
 
   return (
     <navContext.Provider
       value={{
         active: state.active,
         follow: state.follow,
-        setProfile,
-        setChat,
-        setSearch,
-        setFollowers,
-        setFollowing,
-        setUpdate,
+        nav: state.nav,
+        setNav,
+        setActive,
+        setFollow,
       }}
     >
       {props.children}

@@ -1,44 +1,23 @@
-import {
-  SET_PROFILE,
-  SET_CHAT,
-  SET_SEARCH,
-  SET_FOLLOWERS,
-  SET_FOLLOWING,
-  SET_UPDATE,
-} from "../types";
+import { SET_ACTIVE, SET_FOLLOW, SET_NAV } from "../types";
 
 export default (state, action) => {
   switch (action.type) {
-    case SET_PROFILE:
+    case SET_ACTIVE:
       return {
         ...state,
-        active: "profile",
-      };
-    case SET_CHAT:
-      return {
-        ...state,
-        active: "chat",
-      };
-    case SET_SEARCH:
-      return {
-        ...state,
-        active: "search",
+        active: action.payload,
       };
 
-    case SET_UPDATE:
+    case SET_FOLLOW:
       return {
         ...state,
-        active: "update",
+        follow: action.payload,
       };
-    case SET_FOLLOWERS:
+
+    case SET_NAV:
       return {
         ...state,
-        follow: "followers",
-      };
-    case SET_FOLLOWING:
-      return {
-        ...state,
-        follow: "following",
+        nav: action.payload,
       };
   }
 };

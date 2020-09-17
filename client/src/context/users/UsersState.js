@@ -21,6 +21,7 @@ import {
   UPDATE_FAIL,
   VIEW_PROFILE,
   CLEAR_VIEW,
+  SEARCH_FAIL,
 } from "../types";
 
 const UsersState = (props) => {
@@ -49,6 +50,7 @@ const UsersState = (props) => {
   const clearUpdateStatus = () => dispatch({ type: CLEAR_UPDATE });
   const viewProfile = (data) => dispatch({ type: VIEW_PROFILE, payload: data });
   const clearProfile = () => dispatch({ type: CLEAR_VIEW });
+  const clearUsers = () => dispatch({ type: SEARCH_FAIL });
 
   const getFollowers = async () => {
     if (localStorage.token) {
@@ -83,7 +85,7 @@ const UsersState = (props) => {
       const res = await axios.get(`/api/auth/?value=${value}`);
       dispatch({ type: SEARCH_USERS, payload: res.data });
     } catch (err) {
-      console.error(err);
+      clearUsers();
     }
   };
 
@@ -99,6 +101,7 @@ const UsersState = (props) => {
 
     try {
       setLoader2();
+      console.log(id);
       const res = await axios.post("/api/follow", { id }, config);
       dispatch({ type: FOLLOW_USER, payload: res.data.msg, id: id });
     } catch (err) {
@@ -172,6 +175,7 @@ const UsersState = (props) => {
         clearUpdateStatus,
         viewProfile,
         clearProfile,
+        clearUsers,
       }}
     >
       {props.children}

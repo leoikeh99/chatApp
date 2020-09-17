@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
+import NavContext from "../../context/nav/navContext";
 import * as EmailValidator from "email-validator";
 
 const Register = (props) => {
+  const navContext = useContext(NavContext);
+  const { setNav } = navContext;
+
   const AuthContext = useContext(authContext);
   const { error, isAuthenticated, register } = AuthContext;
 
@@ -12,6 +16,10 @@ const Register = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  useEffect(() => {
+    setNav("reg");
+  }, []);
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", () => {
@@ -45,19 +53,13 @@ const Register = (props) => {
   return (
     <section className="auth">
       {/* <div className="error">error</div> */}
-      <div className="top">
-        <div className="space">
-          <h1 className="sac">Chatter</h1>
-          <Link to="/login">Login</Link>
-        </div>
-      </div>
 
       <div className="container">
         <div className="sub">
           <h2>Sign up</h2>
 
           <form action="" onSubmit={submit}>
-            <label htmlFor="">Username</label>
+            <label htmlFor="">Username:</label>
             <input
               type="text"
               onClick={() => setActive("username")}
@@ -66,7 +68,7 @@ const Register = (props) => {
               required
             />
 
-            <label htmlFor="">Email Address</label>
+            <label htmlFor="">Email Address:</label>
             <input
               type="text"
               onClick={() => setActive("email")}
@@ -75,7 +77,7 @@ const Register = (props) => {
               required
             />
 
-            <label htmlFor="">Password</label>
+            <label htmlFor="">Password:</label>
             <input
               type="password"
               onClick={() => setActive("password")}
@@ -85,7 +87,7 @@ const Register = (props) => {
               minLength="6"
             />
 
-            <label htmlFor="">Confirm Password</label>
+            <label htmlFor="">Confirm Password:</label>
             <input
               type="password"
               onClick={() => setActive("confirm_password")}

@@ -1,6 +1,6 @@
-//color schemes
+// color schemes
 $background: #233142;
-$second-color: #455d7a;
+$secondary-color: #455d7a;
 $primary-color: #f95959;
 $primary-text-color: #e3e3e3;
 $color-info: #757575;
@@ -9,11 +9,11 @@ $secondary-text-color: #bdbdbd;
 $icon-color: #000000;
 
 // $background: #152a38;
-// $second-color: #2f5241;
-// $secondary: #f95959;
+// $second-color: #f95959;
+// $primary-color: #2f5241;
 // $primary-text-color: #e4e5db;
-// $primary-text-color: #212121;
-// $secondary-text-color: #757575;
+// // $primary-text-color: #212121;
+// $color-info: #757575;
 // $secondary-text-color: #bdbdbd;
 // $icon-color: #000000;
 
@@ -42,5 +42,31 @@ $icon-color: #000000;
   }
   100% {
     opacity: 0;
+  }
+}
+
+@-webkit-keyframes sk-circleBounceDelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes sk-circleBounceDelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
