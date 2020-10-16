@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import authContext from "../../context/auth/authContext";
 import NavContext from "../../context/nav/navContext";
-import $ from "jquery";
 
 const Login = (props) => {
   const navContext = useContext(NavContext);
@@ -17,6 +15,7 @@ const Login = (props) => {
 
   useEffect(() => {
     setNav("login");
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -29,13 +28,14 @@ const Login = (props) => {
     }
   }, [isAuthenticated, props.history]);
 
-  // useEffect(() => {
-  //   if (error) {
-  //     setTimeout(() => {
-  //       clearError();
-  //     }, 4000);
-  //   }
-  // }, [error]);
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        clearError();
+      }, 4000);
+    }
+    // eslint-disable-next-line
+  }, [error]);
 
   const submit = (e) => {
     e.preventDefault();
@@ -47,8 +47,6 @@ const Login = (props) => {
 
   return (
     <section className="auth">
-      {/* {error && <div className="error">{error}</div>} */}
-
       <div className="container">
         <div className="sub">
           <h2>Login</h2>
@@ -71,7 +69,8 @@ const Login = (props) => {
               required
             />
 
-            <input type="submit" value="Sign up" />
+            <input type="submit" value="Login" />
+            {error && <div className="error">{error}</div>}
           </form>
         </div>
       </div>

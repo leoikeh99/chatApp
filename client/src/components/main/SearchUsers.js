@@ -18,13 +18,14 @@ const SearchUsers = () => {
 
   useEffect(() => {
     clearUsers();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <section className="search" onSubmit={submit}>
       <div className="cover">
         <form action="">
-          <i class="fa fa-search" aria-hidden="true"></i>
+          <i className="fa fa-search" aria-hidden="true" onClick={submit}></i>
           <input
             type="text"
             placeholder="Search users..."

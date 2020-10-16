@@ -18,6 +18,11 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: "No bio yet",
     },
+    avatar: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "upload.files",
+      default: null,
+    },
   },
   {
     timestamps: true,

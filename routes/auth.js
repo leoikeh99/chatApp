@@ -8,7 +8,21 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Follow = require("../models/Follow");
 const auth = require("../middleware/auth");
-const { findOne } = require("../models/User");
+
+const url = config.get("mongoURI");
+const mongoose = require("mongoose");
+const Grid = require("gridfs-stream");
+const { createConnection } = require("mongoose");
+const conn = createConnection(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+let gfs;
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
 
 //Login a user
 router.post(
@@ -25,13 +39,13 @@ router.post(
     try {
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ msg: "invalid credentials" });
+        return res.status(400).json({ msg: "Invalid credentials" });
       }
 
       const checkPass = await bcrypt.compare(password, user.password);
 
       if (!checkPass) {
-        return res.status(400).json({ msg: "invalid credentials" });
+        return res.status(400).json({ msg: "Invalid credentials" });
       }
 
       const payload = {
@@ -55,6 +69,33 @@ router.post(
     }
   }
 );
+
+router.get("/avatar/:id", async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id);
+    const checkAv = user.avatar;
+    if (user.avatar) {
+      gfs.files.findOne({ _id: checkAv }, (err, file) => {
+        if (!file || file.length === 0) {
+          avatar = null;
+        }
+
+        if (
+          file.contentType === "image/jpeg" ||
+          file.contentType === "image/png" ||
+          file.contentType === "image/jpg"
+        ) {
+          const readstream = gfs.createReadStream(file.filename);
+          readstream.pipe(res);
+        }
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
 
 //get a user
 router.get("/", auth, async (req, res) => {
@@ -93,6 +134,7 @@ router.get("/", auth, async (req, res) => {
           id: value.id,
           bio: value.bio,
           joined: value.createdAt,
+          avatar: value.avatar ? true : false,
           following: following ? true : false,
           followed: followed ? true : false,
         };

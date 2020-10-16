@@ -15,7 +15,7 @@ const NavBar = () => {
           ) : nav === "reg" ? (
             <Link to="/login">Login</Link>
           ) : nav === "/" ? (
-            <Link>Logout</Link>
+            <Link to="/">Logout</Link>
           ) : null}
         </div>
       </div>

@@ -4,10 +4,47 @@ const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const config = require("config");
 const jwt = require("jsonwebtoken");
-
+const multer = require("multer");
+const url = config.get("mongoURI");
+const GridFSBucket = require("multer-gridfs-storage");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
-const { findById } = require("../models/User");
+const mongoose = require("mongoose");
+const Grid = require("gridfs-stream");
+const { createConnection } = require("mongoose");
+const conn = createConnection(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+let gfs;
+conn.once("open", () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection("uploads");
+});
+
+const crypto = require("crypto");
+const path = require("path");
+
+const storage = new GridFSBucket({
+  url: url,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        const filename = buf.toString("hex") + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: "uploads",
+        };
+        resolve(fileInfo);
+      });
+    });
+  },
+});
+const upload = multer({ storage });
 
 router.post(
   "/",
@@ -67,17 +104,35 @@ router.post(
   }
 );
 
-router.put("/", auth, async (req, res) => {
+router.put("/", auth, upload.single("avatar"), async (req, res) => {
   const id = req.user.id;
-  const { username, email, bio } = req.body;
+  const { username, email, bio } = JSON.parse(req.body.data);
   try {
+    const user = await User.findById(id);
     const update = {};
     if (username) update.username = username;
     if (email) update.email = email;
     if (bio) update.bio = bio;
 
-    const user = await User.findById(id);
-
+    if (req.file) {
+      if (
+        req.file.contentType === "image/jpeg" ||
+        req.file.contentType === "image/png" ||
+        req.file.contentType === "image/jpg"
+      ) {
+        if (user.avatar) {
+          gfs.remove(
+            { _id: user.avatar, root: "uploads" },
+            (err, gridStore) => {
+              if (err) {
+                res.status(400).json({ err });
+              }
+            }
+          );
+        }
+        update.avatar = req.file.id;
+      }
+    }
     await User.findByIdAndUpdate(id, { $set: update }, { new: true });
 
     res.json({ msg: "Profile updated successfully" });

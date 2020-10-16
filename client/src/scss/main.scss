@@ -2,6 +2,11 @@
 @import "spinner";
 @import "mobile";
 
+*,
+*:focus {
+  outline: none !important;
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -58,6 +63,19 @@ body {
   cursor: pointer;
   &:hover {
     background: darken($secondary-color, $amount: 5);
+  }
+}
+
+.btn-info {
+  padding: 8px;
+  color: $primary-text-color;
+  background: $color-info;
+  border: 0;
+  border-radius: 3px;
+  margin: 3px 0px;
+  cursor: pointer;
+  &:hover {
+    background: darken($color-info, $amount: 5);
   }
 }
 
@@ -133,9 +151,23 @@ body {
       color: $secondary-text-color;
     }
   }
+  .error,
+  .alert {
+    text-align: center;
+    background: rgb(185, 19, 19);
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
+  .alert {
+    display: none;
+    animation-duration: 3s;
+  }
 }
 
 .home {
+  position: relative;
   .overlay {
     width: 100%;
     height: 100%;
@@ -144,6 +176,19 @@ body {
     z-index: 2;
     position: fixed;
   }
+
+  .notify {
+    position: absolute;
+    top: 60px;
+    right: 5px;
+    padding: 8px;
+    z-index: 2;
+    background: darken($background, 4);
+    border-radius: 3px;
+    opacity: 1;
+    animation: notify 10s ease-in-out forwards;
+  }
+
   .alert {
     position: fixed;
     z-index: 3;
@@ -177,8 +222,16 @@ body {
       box-sizing: border-box;
       max-width: 500px;
       margin: 0px 6px;
+      p {
+        margin-top: 0px;
+      }
+      .head {
+        font-size: 1.3rem;
+      }
       img {
-        max-width: 70px;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
       }
 
       .close {
@@ -211,6 +264,26 @@ body {
         }
         i {
           margin-right: 10px;
+          position: relative;
+          .unread {
+            top: -2px;
+            right: -2px;
+            height: 8px;
+            width: 8px;
+            background: rgb(88, 235, 59);
+            font-size: 0.7rem;
+            border-radius: 50%;
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            color: #fff;
+          }
+          .bg {
+            color: $secondary-color;
+            background: #fff;
+          }
         }
       }
     }
@@ -226,7 +299,7 @@ body {
     left: 0;
     width: 100%;
     display: none;
-
+    z-index: 1;
     ul {
       padding: 0;
       margin: 0;
@@ -265,7 +338,9 @@ body {
     text-align: center;
     position: relative;
     img {
-      max-width: 150px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
       position: absolute;
       left: 50%;
       transform: translate(-50%, 0);
@@ -300,6 +375,7 @@ body {
       // display: flex;
       background: darken($background, $amount: 6);
       padding: 30px;
+      padding-bottom: 23px;
       border-radius: 8px;
       z-index: -1;
       margin-bottom: 9px;
@@ -316,21 +392,23 @@ body {
         // border-right: 2px solid $primary-text-color;
         ul {
           li {
-            padding: 3px 10px;
+            padding: 3px 0px;
           }
         }
       }
-      .second {
-        flex-basis: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        ul {
-          li {
-            font-size: 1.5rem;
-            display: inline-block;
-            padding: 0px 7px;
-          }
+      .edit {
+        background: transparent;
+        padding: 10px;
+        color: $primary-text-color;
+        border: 0;
+        border-radius: 3px;
+        margin-top: 8px;
+
+        background: transparent;
+        border: 1px solid $secondary-color;
+        cursor: pointer;
+        &:hover {
+          background: $secondary-color;
         }
       }
     }
@@ -342,21 +420,32 @@ body {
   text-align: center;
   background: darken($background, $amount: 6);
   border-radius: 7px;
+  cursor: pointer;
+  position: relative;
   h3,
   p {
     margin: 3px 0px;
   }
 
-  h3 {
-    &:hover {
+  img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+  }
+  &:hover {
+    h3 {
       color: $primary-color;
-      cursor: pointer;
       text-decoration: underline;
     }
   }
-
-  img {
-    max-width: 90px;
+  .followed {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: darken($secondary-color, 9);
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 0.6rem;
   }
 }
 
@@ -376,7 +465,7 @@ body {
       input {
         box-sizing: border-box;
         width: 100%;
-        padding: 17px;
+        padding: 17px 25px;
         border: 0;
         background: darken($background, $amount: 6);
         border-radius: 28px;
@@ -388,6 +477,7 @@ body {
         top: 15px;
         right: 15px;
         font-size: 1.6rem;
+        cursor: pointer;
       }
     }
   }
@@ -396,5 +486,281 @@ body {
     box-sizing: border-box;
     padding: 0px 7px;
     margin: auto;
+  }
+}
+
+.updateProfile {
+  max-width: 600px;
+  margin: auto;
+  padding: 15px;
+  form {
+    input[type="text"],
+    input[type="submit"],
+    textarea {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 13px;
+      border: 0;
+      background: darken($background, $amount: 6);
+      border-radius: 4px;
+      margin-bottom: 10px;
+      color: $primary-text-color;
+    }
+    textarea {
+      height: 90px;
+    }
+    label {
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+    input[type="submit"] {
+      background: $primary-color;
+      color: $primary-text-color;
+      cursor: pointer;
+      &:hover {
+        background: darken($primary-color, $amount: 4.5);
+      }
+    }
+
+    .custom-file-input {
+      color: transparent;
+    }
+    .custom-file-input::-webkit-file-upload-button {
+      visibility: hidden;
+    }
+    .custom-file-input::before {
+      content: "Upload avatar";
+      color: $primary-text-color;
+      display: inline-block;
+      background: transparent;
+      border: 1px solid #ccc;
+      padding: 8px;
+      outline: none;
+      white-space: nowrap;
+      -webkit-user-select: none;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    .custom-file-input:hover::before {
+      background: darken($background, $amount: 4.5);
+    }
+    .custom-file-input:active {
+      outline: 0;
+    }
+    .custom-file-input:active::before {
+      background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+    }
+  }
+
+  .alert2 {
+    width: 100%;
+    padding: 10px;
+    background: rgb(44, 218, 122);
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+    animation-duration: 3s;
+  }
+}
+
+.liveChat {
+  width: 80%;
+  margin: auto;
+  .header {
+    padding: 6px 9px;
+    display: flex;
+    align-items: center;
+    background: darken($background, $amount: 7);
+    margin-top: 8px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+    i {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    img {
+      width: 40px;
+      border-radius: 25px;
+    }
+    .other {
+      margin-left: 5px;
+      em {
+        font-size: 0.7rem;
+        margin: 0;
+      }
+      h3 {
+        margin: 0;
+        line-height: 1rem;
+      }
+    }
+  }
+  .body::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: darken($background, $amount: 9);
+  }
+  .body {
+    width: 100%;
+    height: 70vh;
+    overflow-y: scroll;
+    background: url("../components/layout/img/bgPatterns/Wavey.svg");
+    padding: 2px 0px;
+
+    .day {
+      padding: 5px;
+      text-align: center;
+      max-width: 160px;
+      background-color: darken($background, $amount: 2);
+      margin: auto;
+    }
+
+    .chat {
+      margin: 8px 6px;
+      display: flex;
+    }
+
+    .chat-right,
+    .chat-left {
+      padding: 10px 15px;
+      border-radius: 6px;
+      max-width: 70%;
+      position: relative;
+    }
+    .chat-left {
+      background: darken($background, $amount: 6);
+      i {
+        position: absolute;
+        top: 2px;
+        left: -5px;
+        color: darken($background, $amount: 6);
+      }
+      .time {
+        display: block;
+        font-size: 0.6rem;
+        margin-top: 3px;
+        color: lighten($secondary-color, 3);
+      }
+    }
+    .chat-right {
+      margin-left: auto;
+      background: darken($background, $amount: 4);
+      i {
+        position: absolute;
+        top: 2px;
+        right: -5px;
+        color: darken($background, $amount: 4);
+      }
+      .time {
+        font-size: 0.6rem;
+        margin-top: 3px;
+        color: lighten($secondary-color, 3);
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+  form {
+    width: 100%;
+    .cover {
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      padding: 6px;
+      background: darken($background, $amount: 8);
+      input {
+        box-sizing: border-box;
+        flex-basis: 88%;
+        background: darken($background, $amount: 5);
+        border: 0;
+        color: $primary-text-color;
+        padding: 12px;
+      }
+      .sendBtn {
+        flex-basis: 12%;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: $primary-color;
+        cursor: pointer;
+        &:hover {
+          background: darken($primary-color, $amount: 5);
+        }
+      }
+    }
+  }
+}
+
+.chatList {
+  padding: 6px;
+  box-sizing: border-box;
+  max-width: 800px;
+  margin: auto;
+
+  .chat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: darken($background, $amount: 2);
+    padding: 6px;
+    margin-bottom: 5px;
+    cursor: pointer;
+
+    .first {
+      display: flex;
+      align-items: center;
+    }
+
+    .second {
+      font-size: 0.8rem;
+      color: $secondary-text-color;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.5rem;
+
+      .unread {
+        height: 15px;
+        width: 15px;
+        background: rgb(204, 64, 64);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    &:hover {
+      background-color: darken($background, $amount: 6);
+      transition: 0.2s ease-in background-color;
+    }
+    img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+    }
+    .other {
+      padding-left: 8px;
+      h3,
+      p {
+        margin: 3px 0px;
+        color: $secondary-text-color;
+        margin-bottom: 0px;
+      }
+      em {
+        line-height: 0.7rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .chats {
+    padding: 3px 10px;
   }
 }

@@ -1,6 +1,5 @@
 import {
   SET_LOADER,
-  SET_ERROR,
   LOGIN,
   LOGOUT,
   REGISTER,

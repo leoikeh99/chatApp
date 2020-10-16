@@ -19,5 +19,7 @@ export default (state, action) => {
         ...state,
         nav: action.payload,
       };
+    default:
+      return state;
   }
 };

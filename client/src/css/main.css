@@ -36,6 +36,16 @@
     -webkit-transform: scale(1);
     transform: scale(1); } }
 
+@keyframes notify {
+  0% {
+    opacity: 1; }
+  25% {
+    opacity: 1; }
+  75% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
+
 .sk-circle {
   margin: 100px auto;
   width: 40px;
@@ -165,7 +175,15 @@
     .home .sideNav ul li .text {
       display: none; }
   .home .main {
-    padding-left: 50px !important; } }
+    padding-left: 50px !important; }
+  .home .profile .image img {
+    width: 120px;
+    height: 120px;
+    top: -106px; } }
+
+@media screen and (max-width: 867px) {
+  .liveChat {
+    width: 95% !important; } }
 
 @media screen and (max-width: 500px) {
   .inline {
@@ -179,6 +197,70 @@
     display: none; }
   .bottomNav {
     display: block !important; } }
+
+@media screen and (max-width: 420px) {
+  .inline .card {
+    padding: 10px !important; }
+  .card {
+    display: flex;
+    align-items: center; }
+    .card img {
+      width: 75px !important;
+      height: 75px !important;
+      flex-basis: 30%;
+      padding-right: 10px; }
+    .card .other {
+      text-align: left; }
+  .profile .details {
+    padding: 12px !important; }
+  .search {
+    padding: 0px !important; } }
+
+@media screen and (max-width: 360px) {
+  .card .other p {
+    font-size: 0.9rem; }
+  .search {
+    padding: 0px !important; }
+    .search input {
+      font-size: 1rem !important; } }
+
+@media screen and (max-width: 320px) {
+  .card .img img {
+    width: 65px !important;
+    height: 65px !important;
+    flex-basis: 30%; }
+  .card .other p {
+    font-size: 0.8rem; } }
+
+@media screen and (max-width: 280px) {
+  .card #img img {
+    width: 58px !important;
+    height: 58px !important;
+    flex-basis: 30%; }
+  .card .other p {
+    font-size: 0.7rem; }
+  .card .other h3 {
+    font-size: 1rem; }
+  .profile ul.nav li {
+    display: inline-block;
+    padding: 10px;
+    margin-left: 5px;
+    border-radius: 5px;
+    background: #18222e;
+    cursor: pointer;
+    font-size: 0.9rem; } }
+
+@media screen and (max-height: 731px) {
+  .liveChat .body {
+    height: 65vh !important; } }
+
+@media screen and (max-height: 568px) {
+  .liveChat .body {
+    height: 61vh !important; } }
+
+*,
+*:focus {
+  outline: none !important; }
 
 body {
   padding: 0;
@@ -228,6 +310,17 @@ body {
   cursor: pointer; }
   .btn-secondary:hover {
     background: #3c516a; }
+
+.btn-info {
+  padding: 8px;
+  color: #e3e3e3;
+  background: #757575;
+  border: 0;
+  border-radius: 3px;
+  margin: 3px 0px;
+  cursor: pointer; }
+  .btn-info:hover {
+    background: #686868; }
 
 .navBar {
   padding: 2px 0px;
@@ -284,102 +377,145 @@ body {
       background: #f84545; }
   .auth form label {
     color: #bdbdbd; }
-
-.home .overlay {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  opacity: 0.6;
-  z-index: 2;
-  position: fixed; }
-
-.home .alert {
-  position: fixed;
-  z-index: 3;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  margin: auto;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; }
-  .home .alert p {
-    margin: 5px 0px; }
-  .home .alert .confirm {
-    padding: 15px 25px;
-    background: #1c2735;
-    border-radius: 5px;
-    box-sizing: border-box; }
-    .home .alert .confirm button {
-      margin: 0px 3px; }
-  .home .alert .viewProfile {
-    position: relative;
-    padding: 15px 25px;
-    background: #1c2735;
-    border-radius: 5px;
-    box-sizing: border-box;
-    max-width: 500px;
-    margin: 0px 6px; }
-    .home .alert .viewProfile img {
-      max-width: 70px; }
-    .home .alert .viewProfile .close {
-      position: absolute;
-      top: 9px;
-      right: 9px;
-      cursor: pointer; }
-
-.home .sideNav ul {
-  padding: 0;
-  margin: 0;
-  position: fixed;
-  height: 100vh;
-  overflow: hidden;
-  background: #1c2735;
-  padding-top: 70px;
-  width: 200px; }
-  .home .sideNav ul li {
-    list-style: none;
-    font-size: 1.2rem;
-    padding: 18px 15px;
+  .auth .error,
+  .auth .alert {
+    text-align: center;
+    background: #b91313;
     width: 100%;
+    padding: 10px;
     box-sizing: border-box;
-    cursor: pointer; }
-    .home .sideNav ul li:hover {
-      background: #192330; }
-    .home .sideNav ul li i {
-      margin-right: 10px; }
+    border-radius: 5px; }
+  .auth .alert {
+    display: none;
+    animation-duration: 3s; }
 
-.home .sideNav .active {
-  color: #f95959;
-  background: #17202b; }
-
-.home .bottomNav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: none; }
-  .home .bottomNav ul {
+.home {
+  position: relative; }
+  .home .overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 0.6;
+    z-index: 2;
+    position: fixed; }
+  .home .notify {
+    position: absolute;
+    top: 60px;
+    right: 5px;
+    padding: 8px;
+    z-index: 2;
+    background: #1c2735;
+    border-radius: 3px;
+    opacity: 1;
+    animation: notify 10s ease-in-out forwards; }
+  .home .alert {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; }
+    .home .alert p {
+      margin: 5px 0px; }
+    .home .alert .confirm {
+      padding: 15px 25px;
+      background: #1c2735;
+      border-radius: 5px;
+      box-sizing: border-box; }
+      .home .alert .confirm button {
+        margin: 0px 3px; }
+    .home .alert .viewProfile {
+      position: relative;
+      padding: 15px 25px;
+      background: #1c2735;
+      border-radius: 5px;
+      box-sizing: border-box;
+      max-width: 500px;
+      margin: 0px 6px; }
+      .home .alert .viewProfile p {
+        margin-top: 0px; }
+      .home .alert .viewProfile .head {
+        font-size: 1.3rem; }
+      .home .alert .viewProfile img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%; }
+      .home .alert .viewProfile .close {
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        cursor: pointer; }
+  .home .sideNav ul {
     padding: 0;
     margin: 0;
-    display: flex;
-    text-align: center;
-    background: #1a2531; }
-    .home .bottomNav ul li {
+    position: fixed;
+    height: 100vh;
+    overflow: hidden;
+    background: #1c2735;
+    padding-top: 70px;
+    width: 200px; }
+    .home .sideNav ul li {
       list-style: none;
-      display: inline-block;
-      padding: 15px 10px;
-      flex-basis: 33.3%; }
-    .home .bottomNav ul .active {
-      color: #f95959;
-      background: #17202b; }
-
-.home .main {
-  padding-top: 55px;
-  padding-left: 200px; }
+      font-size: 1.2rem;
+      padding: 18px 15px;
+      width: 100%;
+      box-sizing: border-box;
+      cursor: pointer; }
+      .home .sideNav ul li:hover {
+        background: #192330; }
+      .home .sideNav ul li i {
+        margin-right: 10px;
+        position: relative; }
+        .home .sideNav ul li i .unread {
+          top: -2px;
+          right: -2px;
+          height: 8px;
+          width: 8px;
+          background: #58eb3b;
+          font-size: 0.7rem;
+          border-radius: 50%;
+          font-family: "Montserrat", sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          color: #fff; }
+        .home .sideNav ul li i .bg {
+          color: #455d7a;
+          background: #fff; }
+  .home .sideNav .active {
+    color: #f95959;
+    background: #17202b; }
+  .home .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: none;
+    z-index: 1; }
+    .home .bottomNav ul {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      text-align: center;
+      background: #1a2531; }
+      .home .bottomNav ul li {
+        list-style: none;
+        display: inline-block;
+        padding: 15px 10px;
+        flex-basis: 33.3%; }
+      .home .bottomNav ul .active {
+        color: #f95959;
+        background: #17202b; }
+  .home .main {
+    padding-top: 55px;
+    padding-left: 200px; }
 
 .profile {
   padding: 0px 10px;
@@ -393,7 +529,9 @@ body {
     text-align: center;
     position: relative; }
     .profile .image img {
-      max-width: 150px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
       position: absolute;
       left: 50%;
       transform: translate(-50%, 0);
@@ -421,6 +559,7 @@ body {
       left: 0;
       background: #18222e;
       padding: 30px;
+      padding-bottom: 23px;
       border-radius: 8px;
       z-index: -1;
       margin-bottom: 9px; }
@@ -432,31 +571,45 @@ body {
         text-align: center;
         padding: 0px 8px; }
         .profile .cover .details .first ul li {
-          padding: 3px 10px; }
-      .profile .cover .details .second {
-        flex-basis: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center; }
-        .profile .cover .details .second ul li {
-          font-size: 1.5rem;
-          display: inline-block;
-          padding: 0px 7px; }
+          padding: 3px 0px; }
+      .profile .cover .details .edit {
+        background: transparent;
+        padding: 10px;
+        color: #e3e3e3;
+        border: 0;
+        border-radius: 3px;
+        margin-top: 8px;
+        background: transparent;
+        border: 1px solid #455d7a;
+        cursor: pointer; }
+        .profile .cover .details .edit:hover {
+          background: #455d7a; }
 
 .card {
   padding: 10px;
   text-align: center;
   background: #18222e;
-  border-radius: 7px; }
+  border-radius: 7px;
+  cursor: pointer;
+  position: relative; }
   .card h3,
   .card p {
     margin: 3px 0px; }
-  .card h3:hover {
-    color: #f95959;
-    cursor: pointer;
-    text-decoration: underline; }
   .card img {
-    max-width: 90px; }
+    width: 90px;
+    height: 90px;
+    border-radius: 50%; }
+  .card:hover h3 {
+    color: #f95959;
+    text-decoration: underline; }
+  .card .followed {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #34475d;
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 0.6rem; }
 
 .search {
   box-sizing: border-box;
@@ -473,7 +626,7 @@ body {
       .search .cover form input {
         box-sizing: border-box;
         width: 100%;
-        padding: 17px;
+        padding: 17px 25px;
         border: 0;
         background: #18222e;
         border-radius: 28px;
@@ -483,9 +636,225 @@ body {
         position: absolute;
         top: 15px;
         right: 15px;
-        font-size: 1.6rem; }
+        font-size: 1.6rem;
+        cursor: pointer; }
   .search .view {
     max-width: 1000px;
     box-sizing: border-box;
     padding: 0px 7px;
     margin: auto; }
+
+.updateProfile {
+  max-width: 600px;
+  margin: auto;
+  padding: 15px; }
+  .updateProfile form input[type="text"],
+  .updateProfile form input[type="submit"],
+  .updateProfile form textarea {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 13px;
+    border: 0;
+    background: #18222e;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    color: #e3e3e3; }
+  .updateProfile form textarea {
+    height: 90px; }
+  .updateProfile form label {
+    display: inline-block;
+    margin-bottom: 3px; }
+  .updateProfile form input[type="submit"] {
+    background: #f95959;
+    color: #e3e3e3;
+    cursor: pointer; }
+    .updateProfile form input[type="submit"]:hover {
+      background: #f84343; }
+  .updateProfile form .custom-file-input {
+    color: transparent; }
+  .updateProfile form .custom-file-input::-webkit-file-upload-button {
+    visibility: hidden; }
+  .updateProfile form .custom-file-input::before {
+    content: "Upload avatar";
+    color: #e3e3e3;
+    display: inline-block;
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 8px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    margin-bottom: 10px; }
+  .updateProfile form .custom-file-input:hover::before {
+    background: #1b2633; }
+  .updateProfile form .custom-file-input:active {
+    outline: 0; }
+  .updateProfile form .custom-file-input:active::before {
+    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9); }
+  .updateProfile .alert2 {
+    width: 100%;
+    padding: 10px;
+    background: #2cda7a;
+    box-sizing: border-box;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+    animation-duration: 3s; }
+
+.liveChat {
+  width: 80%;
+  margin: auto; }
+  .liveChat .header {
+    padding: 6px 9px;
+    display: flex;
+    align-items: center;
+    background: #17202b;
+    margin-top: 8px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px; }
+    .liveChat .header i {
+      margin-right: 5px;
+      cursor: pointer; }
+    .liveChat .header img {
+      width: 40px;
+      border-radius: 25px; }
+    .liveChat .header .other {
+      margin-left: 5px; }
+      .liveChat .header .other em {
+        font-size: 0.7rem;
+        margin: 0; }
+      .liveChat .header .other h3 {
+        margin: 0;
+        line-height: 1rem; }
+  .liveChat .body::-webkit-scrollbar {
+    width: 12px; }
+  .liveChat .body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #131b24; }
+  .liveChat .body {
+    width: 100%;
+    height: 70vh;
+    overflow-y: scroll;
+    background: url("../components/layout/img/bgPatterns/Wavey.svg");
+    padding: 2px 0px; }
+    .liveChat .body .day {
+      padding: 5px;
+      text-align: center;
+      max-width: 160px;
+      background-color: #1f2c3b;
+      margin: auto; }
+    .liveChat .body .chat {
+      margin: 8px 6px;
+      display: flex; }
+    .liveChat .body .chat-right,
+    .liveChat .body .chat-left {
+      padding: 10px 15px;
+      border-radius: 6px;
+      max-width: 70%;
+      position: relative; }
+    .liveChat .body .chat-left {
+      background: #18222e; }
+      .liveChat .body .chat-left i {
+        position: absolute;
+        top: 2px;
+        left: -5px;
+        color: #18222e; }
+      .liveChat .body .chat-left .time {
+        display: block;
+        font-size: 0.6rem;
+        margin-top: 3px;
+        color: #4b6484; }
+    .liveChat .body .chat-right {
+      margin-left: auto;
+      background: #1c2735; }
+      .liveChat .body .chat-right i {
+        position: absolute;
+        top: 2px;
+        right: -5px;
+        color: #1c2735; }
+      .liveChat .body .chat-right .time {
+        font-size: 0.6rem;
+        margin-top: 3px;
+        color: #4b6484;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end; }
+  .liveChat form {
+    width: 100%; }
+    .liveChat form .cover {
+      width: 100%;
+      display: flex;
+      box-sizing: border-box;
+      padding: 6px;
+      background: #151d27; }
+      .liveChat form .cover input {
+        box-sizing: border-box;
+        flex-basis: 88%;
+        background: #1a2531;
+        border: 0;
+        color: #e3e3e3;
+        padding: 12px; }
+      .liveChat form .cover .sendBtn {
+        flex-basis: 12%;
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f95959;
+        cursor: pointer; }
+        .liveChat form .cover .sendBtn:hover {
+          background: #f84040; }
+
+.chatList {
+  padding: 6px;
+  box-sizing: border-box;
+  max-width: 800px;
+  margin: auto; }
+  .chatList .chat {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1f2c3b;
+    padding: 6px;
+    margin-bottom: 5px;
+    cursor: pointer; }
+    .chatList .chat .first {
+      display: flex;
+      align-items: center; }
+    .chatList .chat .second {
+      font-size: 0.8rem;
+      color: #bdbdbd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 0.5rem; }
+      .chatList .chat .second .unread {
+        height: 15px;
+        width: 15px;
+        background: #cc4040;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center; }
+    .chatList .chat:hover {
+      background-color: #18222e;
+      transition: 0.2s ease-in background-color; }
+    .chatList .chat img {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%; }
+    .chatList .chat .other {
+      padding-left: 8px; }
+      .chatList .chat .other h3,
+      .chatList .chat .other p {
+        margin: 3px 0px;
+        color: #bdbdbd;
+        margin-bottom: 0px; }
+      .chatList .chat .other em {
+        line-height: 0.7rem;
+        font-size: 0.8rem; }
+  .chatList .chats {
+    padding: 3px 10px; }

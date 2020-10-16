@@ -15,6 +15,10 @@ const followSchema = mongoose.Schema({
     joined: {
       type: Date,
     },
+    avatar: {
+      type: Boolean,
+      default: false,
+    },
   },
   following: {
     username: {
@@ -29,6 +33,10 @@ const followSchema = mongoose.Schema({
     },
     joined: {
       type: Date,
+    },
+    avatar: {
+      type: Boolean,
+      default: false,
     },
   },
 });

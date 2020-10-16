@@ -9,7 +9,9 @@ const BottomNav = () => {
       <ul>
         <li
           onClick={() => setActive("profile")}
-          className={active === "profile" ? "active" : null}
+          className={
+            active === "profile" || active === "update" ? "active" : null
+          }
         >
           <i className="fa fa-user" aria-hidden="true"></i>
         </li>

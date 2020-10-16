@@ -4,7 +4,6 @@ import UsersContext from "../../context/users/usersContext";
 import moment from "moment";
 import Users from "../../components/users/Users";
 import NavContext from "../../context/nav/navContext";
-import Spinner from "../../components/layout/Spinner";
 
 const Profile = ({ user }) => {
   const usersContext = useContext(UsersContext);
@@ -18,20 +17,25 @@ const Profile = ({ user }) => {
     clearConfirm,
   } = usersContext;
   const navContext = useContext(NavContext);
-  const { follow, setFollow } = navContext;
-  const { username, _id, email, createdAt, bio } = user;
+  const { follow, setFollow, setActive } = navContext;
+  const { username, _id, email, createdAt, bio, avatar } = user;
 
   useEffect(() => {
     getFollowers();
     getFollowing();
     clearStatus();
     clearConfirm();
+    // eslint-disable-next-line
   }, [status]);
 
   return (
     <section className="profile">
       <div className="image">
-        <img src={profile_pic} alt="" />
+        {avatar ? (
+          <img src={`/api/auth/avatar/${_id}`} alt="" />
+        ) : (
+          <img src={profile_pic} alt="" />
+        )}
       </div>
       <div className="cover">
         <div className="details">
@@ -43,16 +47,11 @@ const Profile = ({ user }) => {
                 <li>Joined at: {moment(createdAt).format("LL")}</li>
                 <li>Bio: {bio}</li>
               </ul>
+              <button className="edit" onClick={() => setActive("update")}>
+                <i className="fas fa-edit" aria-hidden="true"></i> Edit Pofile
+              </button>
             </div>
           </div>
-          {/* <div className="second">
-            <div>
-              <ul>
-                <li>Followers: {followers.length}</li>
-                <li>Following: {following.length}</li>
-              </ul>
-            </div>
-          </div> */}
         </div>
       </div>
       <ul className="nav">

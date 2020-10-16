@@ -33,13 +33,13 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-//get messages
-router.get("/", auth, async (req, res) => {
+//get chat
+router.get("/:id", auth, async (req, res) => {
   const sender = req.user.id;
-  const reciever = req.body.reciever;
+  const reciever = req.params.id;
 
   try {
-    const checkReciever = await User.findOne({ username: reciever });
+    const checkReciever = await User.findById(reciever);
     if (!checkReciever) {
       return res.status(400).json({ msg: "Not a user!!!" });
     }
@@ -54,7 +54,22 @@ router.get("/", auth, async (req, res) => {
         { sender: checkReciever.id, reciever: sender },
       ],
     });
-    res.json({ messages });
+    res.json(messages);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: "server error" });
+  }
+});
+
+//get all messages
+router.get("/", auth, async (req, res) => {
+  const sender = req.user.id;
+
+  try {
+    const messages = await Message.find({
+      $or: [{ sender }, { reciever: sender }],
+    });
+    res.json(messages);
   } catch (err) {
     console.error(err);
     return res.status(500).json({ msg: "server error" });

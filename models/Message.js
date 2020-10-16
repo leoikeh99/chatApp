@@ -10,8 +10,24 @@ const messageSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
     },
-    message: {
+    msg: {
       type: String,
+      required: true,
+    },
+    senderName: {
+      type: String,
+      required: true,
+    },
+    recieverName: {
+      type: String,
+      required: true,
+    },
+    senderAv: {
+      type: Boolean,
+      required: true,
+    },
+    recieverAv: {
+      type: Boolean,
       required: true,
     },
   },

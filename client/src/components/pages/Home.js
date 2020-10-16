@@ -6,11 +6,14 @@ import BottomNav from "../../components/layout/BottomNav";
 import Profile from "../../components/main/Profile";
 import Chat from "../../components/main/Chat";
 import SearchUsers from "../../components/main/SearchUsers";
+import UpdateProfile from "../../components/main/UpdateProfile";
 import Spinner from "../../components/layout/Spinner";
 import UsersContext from "../../context/users/usersContext";
-import profile_pic from "../layout/img/profilepic.png";
-import moment from "moment";
-
+import Confirm from "./subs/Confirm";
+import ViewProfile from "./subs/ViewProfile";
+import io from "socket.io-client";
+const ENDPOINT = "/";
+var socket;
 const Home = (props) => {
   const navContext = useContext(NavContext);
   const { setNav, active } = navContext;
@@ -19,71 +22,53 @@ const Home = (props) => {
   const { loadUser, isAuthenticated, user, loader } = authContext;
 
   const usersContext = useContext(UsersContext);
-  const {
-    confirm,
-    clearConfirm,
-    unfollowUser,
-    profile,
-    clearProfile,
-  } = usersContext;
+  const { confirm, profile, message, getUnread, unreadAmount } = usersContext;
 
   useEffect(() => {
     setNav("/");
     loadUser();
+    // eslint-disable-next-line
   }, [isAuthenticated, props.history]);
+
+  useEffect(() => {
+    socket = io.connect(ENDPOINT);
+    user && socket.emit("storeClientInfo", { customId: user._id });
+    user && getUnread();
+    // eslint-disable-next-line
+  }, [user]);
 
   return (
     <section className="home">
+      {unreadAmount && unreadAmount !== 0 ? (
+        <span className="notify">
+          <i className="fas fa-envelope"></i> You have unread messages
+        </span>
+      ) : null}
       {confirm || profile ? (
         <Fragment>
           <div className="overlay"></div>
           <div className="alert">
-            {confirm && (
-              <div className="confirm">
-                <p>Unfollow {confirm.name}?</p>
-                <div className="buttons">
-                  <button
-                    className="btn-secondary"
-                    onClick={() => unfollowUser(confirm.id)}
-                  >
-                    Unfollow
-                  </button>
-                  <button className="btn-primary" onClick={clearConfirm}>
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            )}
-            {profile && (
-              <div className="viewProfile">
-                <div onClick={clearProfile} className="close">
-                  X
-                </div>
-                <img src={profile_pic} alt="" />
-                <p>@{profile.username}</p>
-                <p>Joined at: {moment(profile.joined).format("LL")}</p>
-                <p>Bio: {profile.bio}</p>
-              </div>
-            )}
+            {confirm && <Confirm />}
+            {profile && <ViewProfile />}
           </div>
         </Fragment>
       ) : null}
       <div className="sideNav">
-        <SideNav />
+        <SideNav user={user} />
       </div>
-      <div className="bottomNav">
-        <BottomNav />
-      </div>
+      <div className="bottomNav">{!message && <BottomNav />}</div>
       <div className="main" id="main">
         {user && (
           <div>
             {active === "profile" ? (
               <Profile user={user} />
             ) : active === "chat" ? (
-              <Chat user={user} />
+              <Chat user={user} socket={socket} />
             ) : active === "search" ? (
               <SearchUsers user={user} />
-            ) : null}{" "}
+            ) : active === "update" ? (
+              <UpdateProfile user={user} />
+            ) : null}
           </div>
         )}
         {loader && <Spinner />}

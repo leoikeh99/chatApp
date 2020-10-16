@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
-import navContext from "../../context/nav/navContext";
+import React, { useContext   } from "react";
+import navContext from "../../context/nav/navContext"; 
 
-const SideNav = () => {
+const SideNav = ({ user }) => {
   const NavContext = useContext(navContext);
   const { active, setActive } = NavContext;
+
   return (
     <div>
       <ul>
         <li
           onClick={() => setActive("profile")}
-          className={active === "profile" ? "active" : null}
+          className={
+            active === "profile" || active === "update" ? "active" : null
+          }
         >
           <i className="fa fa-user " aria-hidden="true"></i>
           <span className="text"> Profile</span>

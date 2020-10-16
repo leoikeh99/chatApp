@@ -16,7 +16,15 @@ import {
   VIEW_PROFILE,
   CLEAR_VIEW,
   SEARCH_FAIL,
+  MESSAGE_USER,
+  GET_CHAT,
+  GET_CHAT_LIST,
+  CLEAR_MESSAGE_USER,
+  SET_CHAT_LIST,
+  GET_ALL_UNREAD,
 } from "../types";
+
+import { getNewList } from "../../functions/helperFunctions";
 
 export default (state, action) => {
   switch (action.type) {
@@ -94,6 +102,51 @@ export default (state, action) => {
         loader2: null,
       };
 
+    case GET_ALL_UNREAD:
+      var amount = 0;
+      action.payload.forEach((val) => {
+        amount += val.amount;
+      });
+      return {
+        ...state,
+        unread: action.payload,
+        unreadAmount: amount,
+      };
+
+    case MESSAGE_USER:
+      return {
+        ...state,
+        messageUser: action.payload,
+      };
+
+    case CLEAR_MESSAGE_USER:
+      return {
+        ...state,
+        messageUser: null,
+      };
+
+    case GET_CHAT:
+      return {
+        ...state,
+        chat: action.payload,
+        loader2: null,
+      };
+
+    case GET_CHAT_LIST:
+      const list = action.payload;
+      const newList = getNewList(list);
+      return {
+        ...state,
+        chatList: newList,
+        loader2: null,
+      };
+
+    case SET_CHAT_LIST:
+      return {
+        ...state,
+        chatList: action.payload,
+      };
+
     case FOLLOW_USER:
       const data = state.users.map((user) => {
         if (user.id === action.id) {
@@ -134,6 +187,7 @@ export default (state, action) => {
       return {
         ...state,
         updateStatus: action.payload,
+        loader2: null,
       };
 
     case CLEAR_UPDATE:
@@ -147,5 +201,7 @@ export default (state, action) => {
         ...state,
         updateFail: action.payload,
       };
+    default:
+      return state;
   }
 };

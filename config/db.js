@@ -2,11 +2,9 @@ const mongoose = require("mongoose");
 const config = require("config");
 const db = config.get("mongoURI");
 
-var conn;
-
 const connectDB = async (req, res) => {
   try {
-    conn = await mongoose.connect(db, {
+    await mongoose.connect(db, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
@@ -19,4 +17,4 @@ const connectDB = async (req, res) => {
   }
 };
 
-module.exports = { connectDB, conn };
+module.exports = connectDB;

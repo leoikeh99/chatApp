@@ -5,8 +5,6 @@ import setAuthToken from "../../functions/setAuthToken";
 import axios from "axios";
 
 import {
-  SET_LOADER,
-  SET_ERROR,
   LOGIN,
   LOGOUT,
   LOGIN_FAIL,
@@ -71,7 +69,7 @@ const AuthState = (props) => {
       dispatch({ type: GET_USER, payload: res.data });
     } catch (err) {
       console.error(err);
-      dispatch({ type: USER_FAIL, payload: err });
+      dispatch({ type: USER_FAIL, payload: err.response.data.msg });
     }
   };
 

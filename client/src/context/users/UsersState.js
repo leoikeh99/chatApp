@@ -22,6 +22,12 @@ import {
   VIEW_PROFILE,
   CLEAR_VIEW,
   SEARCH_FAIL,
+  MESSAGE_USER,
+  GET_CHAT,
+  GET_CHAT_LIST,
+  CLEAR_MESSAGE_USER,
+  SET_CHAT_LIST,
+  GET_ALL_UNREAD,
 } from "../types";
 
 const UsersState = (props) => {
@@ -37,6 +43,11 @@ const UsersState = (props) => {
     updateStatus: null,
     updateFail: null,
     profile: null,
+    messageUser: null,
+    chat: null,
+    chatList: null,
+    unread: null,
+    unreadAmount: null,
   };
 
   const [state, dispatch] = useReducer(usersReducer, initialState);
@@ -51,6 +62,59 @@ const UsersState = (props) => {
   const viewProfile = (data) => dispatch({ type: VIEW_PROFILE, payload: data });
   const clearProfile = () => dispatch({ type: CLEAR_VIEW });
   const clearUsers = () => dispatch({ type: SEARCH_FAIL });
+  const MessageUser = (data) => dispatch({ type: MESSAGE_USER, payload: data });
+  const clearMessageUser = () => dispatch({ type: CLEAR_MESSAGE_USER });
+  const setChatList = (list) =>
+    dispatch({ type: SET_CHAT_LIST, payload: list });
+
+  const getUnread = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      const res = await axios.get("/api/unread");
+      dispatch({ type: GET_ALL_UNREAD, payload: res.data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const clearUnread = async (id) => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      await axios.put(`/api/unread/${id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getChat = async (id) => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      setLoader2();
+      const res = await axios.get(`/api/messages/${id}`);
+      dispatch({ type: GET_CHAT, payload: res.data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getChatList = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    try {
+      setLoader2();
+      const res = await axios.get(`/api/messages`);
+      dispatch({ type: GET_CHAT_LIST, payload: res.data });
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const getFollowers = async () => {
     if (localStorage.token) {
@@ -113,12 +177,6 @@ const UsersState = (props) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    const config = {
-      header: {
-        "Content-Type": "application/json",
-      },
-    };
-
     try {
       setLoader2();
       const res = await axios.delete(`/api/follow/${id}`);
@@ -131,18 +189,19 @@ const UsersState = (props) => {
     }
   };
 
-  const updateProfile = async (data) => {
+  const updateProfile = async (formData) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
     const config = {
       header: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
     };
 
     try {
-      const res = await axios.put("/api/users", data, config);
+      setLoader2();
+      const res = await axios.put("/api/users", formData, config);
       dispatch({ type: UPDATE_SUCCESS, payload: res.data.msg });
     } catch (err) {
       dispatch({ type: UPDATE_FAIL, payload: err.response.data.msg });
@@ -163,6 +222,11 @@ const UsersState = (props) => {
         updateStatus: state.updateStatus,
         updateFail: state.updateFail,
         profile: state.profile,
+        messageUser: state.messageUser,
+        chat: state.chat,
+        chatList: state.chatList,
+        unread: state.unread,
+        unreadAmount: state.unreadAmount,
         getFollowers,
         getFollowing,
         searchUsers,
@@ -176,6 +240,13 @@ const UsersState = (props) => {
         viewProfile,
         clearProfile,
         clearUsers,
+        MessageUser,
+        getChat,
+        getChatList,
+        clearMessageUser,
+        setChatList,
+        getUnread,
+        clearUnread,
       }}
     >
       {props.children}

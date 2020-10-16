@@ -1,24 +1,3 @@
-// @media screen and (max-width: 650px) {
-//   #body {
-//     display: block !important;
-//     .sideNav {
-//       display: none !important;
-//     }
-//   }
-
-//   .bottomNav {
-//     display: block !important;
-//   }
-
-//   .follow {
-//     height: 48vh !important;
-//   }
-
-//   .results {
-//     height: 68vh !important;
-//   }
-// }
-
 @media screen and (max-width: 762px) {
   .home {
     .sideNav {
@@ -34,6 +13,22 @@
     .main {
       padding-left: 50px !important;
     }
+
+    .profile {
+      .image {
+        img {
+          width: 120px;
+          height: 120px;
+          top: -106px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 867px) {
+  .liveChat {
+    width: 95% !important;
   }
 }
 
@@ -53,5 +48,113 @@
   }
   .bottomNav {
     display: block !important;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .inline {
+    .card {
+      padding: 10px !important;
+    }
+  }
+  .card {
+    display: flex;
+    align-items: center;
+    img {
+      width: 75px !important;
+      height: 75px !important;
+      flex-basis: 30%;
+      padding-right: 10px;
+    }
+    .other {
+      text-align: left;
+    }
+  }
+  .profile {
+    .details {
+      padding: 12px !important;
+    }
+  }
+  .search {
+    padding: 0px !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .card {
+    .other {
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+  .search {
+    padding: 0px !important;
+    input {
+      font-size: 1rem !important;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .card {
+    .img img {
+      width: 65px !important;
+      height: 65px !important;
+      flex-basis: 30%;
+    }
+    .other {
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .card {
+    #img img {
+      width: 58px !important;
+      height: 58px !important;
+      flex-basis: 30%;
+    }
+    .other {
+      p {
+        font-size: 0.7rem;
+      }
+      h3 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .profile {
+    ul.nav {
+      li {
+        display: inline-block;
+        padding: 10px;
+        margin-left: 5px;
+        border-radius: 5px;
+        background: darken($background, $amount: 6);
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-height: 731px) {
+  .liveChat {
+    .body {
+      height: 65vh !important;
+    }
+  }
+}
+
+@media screen and (max-height: 568px) {
+  .liveChat {
+    .body {
+      height: 61vh !important;
+    }
   }
 }

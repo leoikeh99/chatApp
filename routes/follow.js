@@ -30,12 +30,14 @@ router.post("/", auth, async (req, res) => {
         id: follower.id,
         bio: follower.bio,
         joined: follower.createdAt,
+        avatar: follower.avatar ? true : false,
       },
       following: {
         username: user.username,
         id: user.id,
         bio: user.bio,
         joined: user.createdAt,
+        avatar: user.avatar ? true : false,
       },
     });
 
@@ -60,12 +62,15 @@ router.get("/:id", auth, async (req, res) => {
           "follower.id": user,
           "following.id": value.follower.id,
         });
+        const checkAvatar = await User.findById(value.follower.id);
+        const avatar = checkAvatar.avatar;
         return {
           username: value.follower.username,
           bio: value.follower.bio,
           id: value.follower.id,
           following: check ? true : false,
           joined: value.follower.joined,
+          avatar: avatar ? true : false,
         };
       });
       Promise.all(data).then((value) => {
@@ -78,7 +83,8 @@ router.get("/:id", auth, async (req, res) => {
           "follower.id": value.following.id,
           "following.id": user,
         });
-
+        const checkAvatar = await User.findById(value.following.id);
+        const avatar = checkAvatar.avatar;
         return {
           username: value.following.username,
           bio: value.following.bio,
@@ -86,6 +92,7 @@ router.get("/:id", auth, async (req, res) => {
           following: true,
           followed: check ? true : false,
           joined: value.following.joined,
+          avatar: avatar ? true : false,
         };
       });
       Promise.all(data).then((value) => {
