@@ -144,7 +144,7 @@ const LiveChat = ({ user, socket, sender, senderName, senderAv }) => {
               <div className="chat" key={message._id} id={message._id}>
                 {message.sender === id && message.reciever === sender ? (
                   <div className="chat-left">
-                    {message.msg}
+                    <p>{message.msg}</p>
                     <i className="fas fa-caret-left"></i>
                     <span className="time">
                       {moment(message.createdAt).format("LT")}
@@ -152,7 +152,7 @@ const LiveChat = ({ user, socket, sender, senderName, senderAv }) => {
                   </div>
                 ) : message.sender === sender && message.reciever === id ? (
                   <div className="chat-right">
-                    {message.msg}
+                    <p>{message.msg}</p>
                     <i className="fas fa-caret-right"></i>
                     <span className="time">
                       <span>{moment(message.createdAt).format("LT")}</span>

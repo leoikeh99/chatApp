@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost:27017/chatApp",
+  "mongoURI": "mongodb+srv://leo:leo222@chatter.ssxwy.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "secret"
 }

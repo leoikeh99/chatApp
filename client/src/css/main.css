@@ -47,7 +47,7 @@
     opacity: 0; } }
 
 .sk-circle {
-  margin: 100px auto;
+  margin: 30px auto;
   width: 40px;
   height: 40px;
   position: relative; }
@@ -258,6 +258,11 @@
   .liveChat .body {
     height: 61vh !important; } }
 
+@media screen and (max-height: 630px) {
+  .auth .sub form#reg input,
+  .auth .sub form#reg input[type="submit"] {
+    padding: 12px 18px; } }
+
 *,
 *:focus {
   outline: none !important; }
@@ -380,11 +385,13 @@ body {
   .auth .error,
   .auth .alert {
     text-align: center;
-    background: #b91313;
+    background: #d42323;
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     box-sizing: border-box;
     border-radius: 5px; }
+  .auth .error {
+    font-size: 0.9rem; }
   .auth .alert {
     display: none;
     animation-duration: 3s; }
@@ -472,20 +479,6 @@ body {
       .home .sideNav ul li i {
         margin-right: 10px;
         position: relative; }
-        .home .sideNav ul li i .unread {
-          top: -2px;
-          right: -2px;
-          height: 8px;
-          width: 8px;
-          background: #58eb3b;
-          font-size: 0.7rem;
-          border-radius: 50%;
-          font-family: "Montserrat", sans-serif;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          color: #fff; }
         .home .sideNav ul li i .bg {
           color: #455d7a;
           background: #fff; }
@@ -752,8 +745,13 @@ body {
     .liveChat .body .chat-left {
       padding: 10px 15px;
       border-radius: 6px;
-      max-width: 70%;
+      max-width: 80%;
       position: relative; }
+      .liveChat .body .chat-right p,
+      .liveChat .body .chat-left p {
+        width: 100%;
+        margin: 0;
+        display: inline-block; }
     .liveChat .body .chat-left {
       background: #18222e; }
       .liveChat .body .chat-left i {
@@ -831,14 +829,15 @@ body {
       align-items: center;
       line-height: 0.5rem; }
       .chatList .chat .second .unread {
-        height: 15px;
-        width: 15px;
+        height: 18px;
+        width: 18px;
         background: #cc4040;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: center; }
+        text-align: center;
+        margin-bottom: 3px; }
     .chatList .chat:hover {
       background-color: #18222e;
       transition: 0.2s ease-in background-color; }

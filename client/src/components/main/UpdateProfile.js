@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import UsersContext from "../../context/users/usersContext";
 import Spinner from "../../components/layout/Spinner";
+import { checkImageType } from "../../functions/helperFunctions";
 import $ from "jquery";
 
 const UpdateProfile = ({ user }) => {
@@ -15,6 +16,7 @@ const UpdateProfile = ({ user }) => {
   const { username, email, bio } = user;
   const [update, setUpdate] = useState({ username, email, bio });
   const [avatar, setAvatar] = useState(null);
+  const [error, setError] = useState(null);
 
   const setData = (e) => {
     setUpdate({ ...update, [e.target.name]: e.target.value });
@@ -27,7 +29,13 @@ const UpdateProfile = ({ user }) => {
       formData.append("avatar", avatar);
     }
     formData.append("data", JSON.stringify(update));
-    updateProfile(formData);
+    if (avatar && checkImageType(avatar.type)) {
+      updateProfile(formData);
+    } else if (!avatar) {
+      updateProfile(formData);
+    } else {
+      setError("Selected file not an image");
+    }
   };
 
   useEffect(() => {
@@ -48,6 +56,14 @@ const UpdateProfile = ({ user }) => {
     }
     // eslint-disable-next-line
   }, [updateStatus]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        setError(null);
+      }, 3000);
+    }
+  }, [error]);
 
   return (
     <section className="updateProfile">
@@ -88,10 +104,9 @@ const UpdateProfile = ({ user }) => {
         <label htmlFor="">{avatar ? avatar.name : "No image chosen"}</label>
 
         <input type="submit" value="Update" />
-
-        <div className="alert2">
-          {updateStatus && updateStatus} {loader2 && <Spinner />}
-        </div>
+        {loader2 && <Spinner />}
+        <div className="alert2">{updateStatus && updateStatus}</div>
+        {error && <div className="imageError">{error}</div>}
       </form>
     </section>
   );

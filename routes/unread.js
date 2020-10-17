@@ -42,7 +42,6 @@ router.get("/", auth, async (req, res) => {
   const reciever = req.user.id;
 
   try {
-    console.log(reciever);
     const unread = await Unread.find({ reciever });
     res.json(unread);
   } catch (err) {

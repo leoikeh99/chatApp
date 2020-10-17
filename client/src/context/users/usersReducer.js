@@ -31,14 +31,18 @@ export default (state, action) => {
     case GET_FOLLOWERS:
       return {
         ...state,
-        followers: action.payload,
+        followers: action.payload.sort((a, b) =>
+          a.username < b.username ? -1 : 1
+        ),
         loader: null,
       };
 
     case GET_FOLLOWING:
       return {
         ...state,
-        following: action.payload,
+        following: action.payload.sort((a, b) =>
+          a.username < b.username ? -1 : 1
+        ),
         loader: null,
       };
 

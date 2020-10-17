@@ -11,8 +11,8 @@ const User = ({ user }) => {
   const usersContext = useContext(UsersContext);
   const { followUser, setConfirm, viewProfile, MessageUser } = usersContext;
 
-  const { username, id, joined, following, followed, avatar } = user;
-  const [profile] = useState({ username, avatar, id });
+  const { username, bio, id, joined, following, followed, avatar } = user;
+  const [profile] = useState({ username, avatar, id, bio });
 
   const message = () => {
     setActive("chat");

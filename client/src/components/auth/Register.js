@@ -77,7 +77,7 @@ const Register = (props) => {
         <div className="sub">
           <h2>Sign up</h2>
 
-          <form action="" onSubmit={submit}>
+          <form action="" onSubmit={submit} id="reg">
             <label htmlFor="">Username:</label>
             <input
               type="text"

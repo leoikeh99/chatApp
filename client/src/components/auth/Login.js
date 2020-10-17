@@ -70,7 +70,9 @@ const Login = (props) => {
             />
 
             <input type="submit" value="Login" />
-            {error && <div className="error">{error}</div>}
+            {error && error === "Invalid credentials" ? (
+              <div className="error">Invalid username or password</div>
+            ) : null}
           </form>
         </div>
       </div>

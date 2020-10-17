@@ -39,7 +39,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "http://127.0.0.1:5000/",
   "secure":"false",
   "devDependencies": {
     "uuid": "^8.3.1"

@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import profile_pic from "../../layout/img/profilepic.png";
 import usersContext from "../../../context/users/usersContext";
-import moment from "moment";
+import { getTime, truncate } from "../../../functions/helperFunctions";
 
 const ChatItem = ({ list, _id, socket }) => {
   const UsersContext = useContext(usersContext);
@@ -98,8 +98,8 @@ const ChatItem = ({ list, _id, socket }) => {
               <img src={profile_pic} alt="" />
             )}
             <div className="other">
-              <h3>@{list.recieverName}</h3>
-              <p>{list.msg}</p>
+              <h3>@{truncate(list.recieverName, 10)}</h3>
+              <p>{truncate(list.msg, 14)}</p>
               <em>{typing}</em>
             </div>
           </div>
@@ -108,7 +108,7 @@ const ChatItem = ({ list, _id, socket }) => {
             {unreadValue && unreadValue !== 0 ? (
               <span className="unread">{unreadValue}</span>
             ) : null}
-            <br /> {moment(list.createdAt).format("LT")}
+            <br /> {getTime(list.createdAt)}
           </div>
         </div>
       ) : (
@@ -129,17 +129,19 @@ const ChatItem = ({ list, _id, socket }) => {
               <img src={profile_pic} alt="" />
             )}
             <div className="other">
-              <h3>@{list.senderName}</h3>
-              <p>{list.msg}</p>
+              <h3>@{truncate(list.senderName, 10)}</h3>
+              <p>{truncate(list.msg, 14)}</p>
               <em>{typing}</em>
             </div>
           </div>
 
           <div className="second">
             {unreadValue && unreadValue !== 0 ? (
-              <span className="unread">{unreadValue}</span>
+              <div>
+                <span className="unread">{unreadValue}</span>
+              </div>
             ) : null}
-            <br /> {moment(list.createdAt).format("LT")}
+            {getTime(list.createdAt)}
           </div>
         </div>
       )}

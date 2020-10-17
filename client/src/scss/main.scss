@@ -154,11 +154,14 @@ body {
   .error,
   .alert {
     text-align: center;
-    background: rgb(185, 19, 19);
+    background: rgb(212, 35, 35);
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     box-sizing: border-box;
     border-radius: 5px;
+  }
+  .error {
+    font-size: 0.9rem;
   }
   .alert {
     display: none;
@@ -265,21 +268,7 @@ body {
         i {
           margin-right: 10px;
           position: relative;
-          .unread {
-            top: -2px;
-            right: -2px;
-            height: 8px;
-            width: 8px;
-            background: rgb(88, 235, 59);
-            font-size: 0.7rem;
-            border-radius: 50%;
-            font-family: "Montserrat", sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            color: #fff;
-          }
+
           .bg {
             color: $secondary-color;
             background: #fff;
@@ -628,8 +617,13 @@ body {
     .chat-left {
       padding: 10px 15px;
       border-radius: 6px;
-      max-width: 70%;
+      max-width: 80%;
       position: relative;
+      p {
+        width: 100%;
+        margin: 0;
+        display: inline-block;
+      }
     }
     .chat-left {
       background: darken($background, $amount: 6);
@@ -726,14 +720,15 @@ body {
       line-height: 0.5rem;
 
       .unread {
-        height: 15px;
-        width: 15px;
+        height: 18px;
+        width: 18px;
         background: rgb(204, 64, 64);
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
+        margin-bottom: 3px;
       }
     }
 

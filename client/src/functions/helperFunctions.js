@@ -78,4 +78,35 @@ const arrange = (chatList, data) => {
   return list;
 };
 
-export { truncate, getDays, checkDate, getNewList, arrange };
+const getTime = (date) => {
+  const convertDate = moment(date).format("L");
+  const today = moment().format("L");
+  const yesterday = moment().add(-1, "days").format("L");
+
+  if (convertDate === today) {
+    return moment(date).format("LT");
+  } else if (convertDate === yesterday) {
+    return "Yesterday";
+  } else {
+    return convertDate;
+  }
+};
+
+const checkImageType = (type) => {
+  let imageTypes = ["image/jpg", "image/jpeg", "image/png"];
+  let check = false;
+  imageTypes.forEach((imageType) => {
+    type === imageType && (check = true);
+  });
+  return check;
+};
+
+export {
+  truncate,
+  getDays,
+  checkDate,
+  getNewList,
+  arrange,
+  getTime,
+  checkImageType,
+};
