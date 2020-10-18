@@ -3,7 +3,7 @@ import UsersContext from "../../context/users/usersContext";
 import Users from "../../components/users/Users";
 import Spinner from "../../components/layout/Spinner";
 
-const SearchUsers = () => {
+const SearchUsers = ({ user }) => {
   const [search, setSearch] = useState(null);
   const usersContext = useContext(UsersContext);
   const { users, searchUsers, clearUsers, loader } = usersContext;
@@ -34,7 +34,11 @@ const SearchUsers = () => {
         </form>
       </div>
       <div className="view">
-        {users.length !== 0 && !loader ? <Users users={users} /> : <div></div>}
+        {users.length !== 0 && !loader ? (
+          <Users _id={user._id} users={users} />
+        ) : (
+          <div></div>
+        )}
         {loader && <Spinner />}
       </div>
     </section>

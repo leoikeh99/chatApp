@@ -69,9 +69,9 @@ const Profile = ({ user }) => {
         </li>
       </ul>
       {follow === "following" ? (
-        <Users users={following} />
+        <Users _id={_id} users={following} />
       ) : follow === "followers" ? (
-        <Users users={followers} />
+        <Users _id={_id} users={followers} />
       ) : null}
     </section>
   );

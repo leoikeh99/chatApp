@@ -4,7 +4,7 @@ import moment from "moment";
 import UsersContext from "../../context/users/usersContext";
 import NavContext from "../../context/nav/navContext";
 
-const User = ({ user }) => {
+const User = ({ user, _id }) => {
   const navContext = useContext(NavContext);
   const { setActive } = navContext;
 
@@ -39,7 +39,11 @@ const User = ({ user }) => {
           Joined at: {moment(joined).format("LL")}
         </p>
         {!following && (
-          <button onClick={() => followUser(id)} className="btn-primary">
+          <button
+            onClick={() => followUser(id)}
+            className={id !== _id ? "btn-primary" : "btn-primary-disabled"}
+            disabled={id === _id ? true : false}
+          >
             Follow
           </button>
         )}
@@ -52,9 +56,10 @@ const User = ({ user }) => {
           </button>
         )}
         <button
-          className="btn-info"
+          className={id !== _id ? "btn-info" : "btn-info-disabled"}
           style={{ marginLeft: "4px" }}
           onClick={message}
+          disabled={id === _id ? true : false}
         >
           <i className="fas fa-envelope"></i> Message
         </button>

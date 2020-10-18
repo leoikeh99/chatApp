@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Follow = require("../models/Follow");
 const auth = require("../middleware/auth");
+var validator = require("email-validator");
 
 const url = config.get("mongoURI");
 const mongoose = require("mongoose");
@@ -28,7 +29,6 @@ conn.once("open", () => {
 router.post(
   "/",
   check("password", "Password is needed").exists(),
-  check("email", "Email invalid").isEmail(),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -37,12 +37,27 @@ router.post(
 
     const { email, password } = req.body;
     try {
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(400).json({ msg: "Invalid credentials" });
+      var userPassword;
+      var id;
+      if (validator.validate(email)) {
+        const user = await User.findOne({ email });
+        if (!user) {
+          return res.status(400).json({ msg: "Invalid credentials" });
+        } else {
+          userPassword = user.password;
+          id = user.id;
+        }
+      } else {
+        const user = await User.findOne({ username: email });
+        if (!user) {
+          return res.status(400).json({ msg: "Invalid credentials" });
+        } else {
+          userPassword = user.password;
+          id = user.id;
+        }
       }
 
-      const checkPass = await bcrypt.compare(password, user.password);
+      const checkPass = await bcrypt.compare(password, userPassword);
 
       if (!checkPass) {
         return res.status(400).json({ msg: "Invalid credentials" });
@@ -50,7 +65,7 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id,
+          id,
         },
       };
 

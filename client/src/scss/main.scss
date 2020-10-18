@@ -40,7 +40,8 @@ body {
   }
 }
 
-.btn-primary {
+.btn-primary,
+.btn-primary-disabled {
   padding: 8px;
   color: $primary-text-color;
   background: $primary-color;
@@ -48,9 +49,17 @@ body {
   border-radius: 3px;
   margin: 3px 0px;
   cursor: pointer;
+}
+
+.btn-primary {
   &:hover {
     background: darken($primary-color, $amount: 5);
   }
+}
+
+.btn-primary-disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 
 .btn-secondary {
@@ -66,7 +75,8 @@ body {
   }
 }
 
-.btn-info {
+.btn-info,
+.btn-info-disabled {
   padding: 8px;
   color: $primary-text-color;
   background: $color-info;
@@ -74,9 +84,17 @@ body {
   border-radius: 3px;
   margin: 3px 0px;
   cursor: pointer;
+}
+
+.btn-info {
   &:hover {
     background: darken($color-info, $amount: 5);
   }
+}
+
+.btn-info-disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 
 .navBar {

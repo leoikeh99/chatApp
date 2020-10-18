@@ -51,9 +51,9 @@ const Login = (props) => {
         <div className="sub">
           <h2>Login</h2>
           <form action="" onSubmit={submit}>
-            <label htmlFor="">Email:</label>
+            <label htmlFor="">Username or Email:</label>
             <input
-              type="email"
+              type="text"
               onClick={() => setActive("username")}
               className={active === "username" ? "active" : ""}
               onChange={(e) => setUsername(e.target.value.trim())}
